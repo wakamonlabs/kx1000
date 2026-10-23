@@ -655,6 +655,15 @@ h2.big{color:var(--kfg);text-shadow:-.05em -.05em 0 var(--kk),.05em -.05em 0 var
 .perk .pd{color:var(--kdim)}
 .perk:hover{border-color:transparent;filter:brightness(1.1)}
 .perk:active{transform:translateY(.12em)}
+/* v1.10.2 보급 카드 세로형 */
+.perks{grid-template-columns:repeat(3,1fr);gap:.5em;max-width:22em;align-items:stretch}
+.perk{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.3em;border-image:none!important;padding:.75em .4em .7em!important;border:.16em solid var(--kk);border-radius:.7em;padding:.75em .4em .7em;min-height:12.5em;
+  background:linear-gradient(#4b3524,#30211600 55%),linear-gradient(#3b2a1c,#261a11);box-shadow:0 .22em 0 var(--kk),inset 0 .12em 0 rgba(255,220,170,.2),inset 0 -.12em 0 rgba(0,0,0,.4)}
+.perk .pi{position:static;width:3.6em;height:3.6em;margin:0 0 .15em;flex:none}
+.perk .pn{font-size:1.08em;line-height:1.15;word-break:keep-all}
+.perk .pl{align-self:center;margin:.05em 0 .1em}
+.perk .pd{font-size:.76em;line-height:1.35;word-break:keep-all}
+.perk:active{transform:translateY(.14em);box-shadow:0 .08em 0 var(--kk),inset 0 .12em 0 rgba(255,220,170,.2)}
 /* 일시정지 · 설정 */
 #ovPause h2.big,#ovOver h2.big{font-size:1.7em;padding:.38em 1.8em .5em;background:var(--a-ribL) center/100% 100% no-repeat;color:#fff}
 #ovPause h2.big{background-image:var(--a-ribW);color:var(--kk);text-shadow:0 .06em 0 rgba(255,255,255,.5)}
@@ -3010,7 +3019,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=55,WEB_NAME='1.10.1';
+const WEB_BUILD=56,WEB_NAME='1.10.2';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
@@ -3032,7 +3041,7 @@ const WEB_BUILD=55,WEB_NAME='1.10.1';
     if(G&&state==='play')toast('업데이트 준비됨 · 로비에서 적용',AMBER);
   };
 })();
-window.__kx={TUNE,repair:s=>manualRepair(s),strike:(x,y)=>strike(x,y),upCost:u=>upCost(u),UPG,meta:()=>META,setMeta:m=>{Object.assign(META,m);saveMeta();renderLab()},toLobby:()=>toLobby(),setView:i=>setView(i),get G(){return G},get state(){return state},start:startGame,build,buyTroop,buyDrone,buyUpg:id=>buyUpg(UPG.find(u=>u.id===id)),takePerk:i=>{const b=$('perkList').querySelectorAll('.perk')[i];if(b)b.click()},
+window.__kx={openPerk,TUNE,repair:s=>manualRepair(s),strike:(x,y)=>strike(x,y),upCost:u=>upCost(u),UPG,meta:()=>META,setMeta:m=>{Object.assign(META,m);saveMeta();renderLab()},toLobby:()=>toLobby(),setView:i=>setView(i),get G(){return G},get state(){return state},start:startGame,build,buyTroop,buyDrone,buyUpg:id=>buyUpg(UPG.find(u=>u.id===id)),takePerk:i=>{const b=$('perkList').querySelectorAll('.perk')[i];if(b)b.click()},
   render:()=>render(),step(sec,h=1/60){for(let t=0;t<sec;t+=h){if(state==='play'||state==='over'){update(h,h)}}},strike};
 
 const SPLASH_T0=performance.now();let spReady=false,spDone=false;
