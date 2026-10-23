@@ -1,6 +1,6 @@
 {
-  "version": 53,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/949b00e3-648f-4fe4-a835-76dacee43eda.zip",
-  "sha256": "b9d409674736b2ed0d3ceeee725171ce157d34256ffb8dbf0c8fe5e2c6f636c9",
-  "note": "1.9.2 종족 심볼 재조정"
+ "version": 54,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/3615b579-076d-427c-b25a-ed9a684701a7.zip",
+ "sha256": "a5e958954d43e0ba926b50aca8bfcf7d9f9faaf6999719e1d2f45d044acfc601",
+ "note": "v1.10.0: 사령부를 큰 기지로 교체, 로비 승급 버튼 제거"
 }
