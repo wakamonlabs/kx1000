@@ -1,6 +1,6 @@
 {
-  "version": 45,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/bd496855-deca-4e7b-b9fe-51189023dfb0.zip",
-  "sha256": "e872e6d1e07c882e3d650ae0a179bbe917c382d59a23c355b259add7dbeed7c4",
-  "note": "1.7.4 일시정지 화면에 설정 내장, 버전 표시 개선"
+  "version": 46,
+  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/7c0793a8-66a8-41ab-8c2a-e17efe58466a.zip",
+  "sha256": "b98c50bdd38cb3bd42c14ae56cd63af3237ab379fa796103809efa54429fd521",
+  "note": "1.8.0 폴드·태블릿 등 넓은 화면에서 전장 폭 확장"
 }
