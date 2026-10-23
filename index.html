@@ -2490,6 +2490,7 @@ function drawWorld(rdt){
   if(OY>0){const ext=Math.min(OY+80,H);c.save();c.scale(1,-1);c.drawImage(ground,0,0,W*GS,ext*GS,0,0,W,ext);c.restore();c.fillStyle='rgba(10,5,4,.18)';c.fillRect(0,-ext,W,ext)}
   c.drawImage(ground,0,0,W,H);c.drawImage(decal,0,0,W,H);
   if(FLIP){c.save();c.translate(0,2*H);c.scale(1,-1);c.drawImage(ground,0,(H-FPAD-OY-20)*GS,W*GS,(FPAD+OY+20)*GS,0,H-FPAD-OY-20,W,FPAD+OY+20);c.restore();c.fillStyle='rgba(10,5,4,.25)';c.fillRect(0,H,W,FPAD+OY+20)}
+  if(FLIP){const ext=SH-FPAD-H+24;if(ext>0){c.save();c.scale(1,-1);c.drawImage(ground,0,0,W*GS,ext*GS,0,0,W,ext);c.drawImage(decal,0,0,W*GS,ext*GS,0,0,W,ext);c.restore();const g=c.createLinearGradient(0,0,0,-ext);g.addColorStop(0,'rgba(10,5,4,0)');g.addColorStop(1,'rgba(10,5,4,.45)');c.fillStyle=g;c.fillRect(0,-ext,W,ext)}}
   drawSlots();drawBase();
   if(menuSlot&&!menu.hidden){const x=WX+menuSlot.col*SLOT_W+3,y=ROW_Y[menuSlot.row]-17;c.strokeStyle=AMBER;c.lineWidth=1.6;rr(c,x,y,54,34,5);c.stroke()}
   for(const s of G.structs)drawStruct(s);
@@ -3009,7 +3010,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=54,WEB_NAME='1.10.0';
+const WEB_BUILD=55,WEB_NAME='1.10.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}

@@ -1,6 +1,6 @@
 {
- "version": 54,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/3615b579-076d-427c-b25a-ed9a684701a7.zip",
- "sha256": "a5e958954d43e0ba926b50aca8bfcf7d9f9faaf6999719e1d2f45d044acfc601",
- "note": "v1.10.0: 사령부를 큰 기지로 교체, 로비 승급 버튼 제거"
+ "version": 55,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/3e4d3a49-5302-4c2b-8b20-9ec6bdd863c9.zip",
+ "sha256": "51e5a77b7f1d70f39a712804ae6551161474c17c6355b0df278a44e422f4c2bb",
+ "note": "v1.10.1: 전장 아래 검은 띠를 바닥으로 채움"
 }
