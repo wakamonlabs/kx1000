@@ -1,6 +1,6 @@
 {
- "version": 59,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b7426084-846e-424f-a8aa-0358c20a0150.zip",
- "sha256": "34b6b5a1e841327dd50f8e4d61934fe66bc7dee98d06481cc94b09dbba434782",
- "note": "v1.11.1: 후반 광물 수입 완화, 강화 비용 인하, 공병 드론 설명"
+ "version": 60,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f0365773-41eb-4dfb-90a4-71e6e1541122.zip",
+ "sha256": "78330dfe342a0d0b83ee05e0e81cabdacc33da12ff790bc1f36a329fbd88436b",
+ "note": "v1.12.0: 결과 화면 개편, 코인 새 디자인, 에너지 50, 탱크 사거리 3배, 구역 확보 후 공백 단축"
 }
