@@ -1,6 +1,6 @@
 {
-  "version": 51,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/632881f0-8d4d-47cd-9d36-9c85a276ce24.zip",
-  "sha256": "08a97f488d82fee97c5cd6904a61923e032c0598c47ebb6105b055287940c45e",
-  "note": "1.9.0 도감 종족 소개, 맵 선 제거, 결제 테스트 지급"
+  "version": 52,
+  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f00dc68c-9a9f-4fee-a299-88945a9eb0fe.zip",
+  "sha256": "80a942d404a16a5de0647bc3a6b27934ae3aed07fcaf77e3b6c41aa227754968",
+  "note": "1.9.1 도감 종족 심볼 단순화, 가로 배치"
 }
