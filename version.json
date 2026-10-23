@@ -1,6 +1,6 @@
 {
- "version": 58,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/6a951baa-5e03-4331-9809-c78fcdeb422a.zip",
- "sha256": "c42c393c4126c86d0217381d2cb65c2e97634032f3e0f63507137679cc250cda",
- "note": "v1.11.0: 벙커 병사 내보내기(교체), 정예 소총병 증강"
+ "version": 59,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b7426084-846e-424f-a8aa-0358c20a0150.zip",
+ "sha256": "34b6b5a1e841327dd50f8e4d61934fe66bc7dee98d06481cc94b09dbba434782",
+ "note": "v1.11.1: 후반 광물 수입 완화, 강화 비용 인하, 공병 드론 설명"
 }
