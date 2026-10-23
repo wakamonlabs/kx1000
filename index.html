@@ -853,7 +853,7 @@ function calcW(iw,ih){const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.m
 const W=(()=>{try{let iw=Math.max(320,window.innerWidth),ih=Math.max(480,window.innerHeight-84);if(PCV&&pcDev!=='full'){const d=pcDev.split('x').map(Number);if(d.length===2&&d[0]>0){iw=d[0];ih=Math.max(480,d[1]-84)}}const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.min(520,w))}catch(e){return 360}})();
 const WX=(W-360)/2;
 const ROW_Y=[392,436,480],SLOT_W=60,BASE_Y=540,WAVE_LEN=20,MAX_ALIVE=420;
-const OPEN_Y=[514,527,540];
+const OPEN_Y=[498,511,524];
 const INK='#f4e7d3',DIM='#a48e78',AMBER='#ffb23e',DANGER='#ff4b3a';
 const $=id=>document.getElementById(id);
 const cv=$('cv');let ctx=cv.getContext('2d');const frame=$('frame'),bar=$('bar'),stage=$('stage');
@@ -919,6 +919,7 @@ const PERKS=[
   {id:'adren',name:'아드레날린',desc:'사령부 체력이 절반 이하면 공격 속도 +50%',max:1},
   {id:'reinf',name:'긴급 증원',desc:'소총병 4명과 저격병 1명이 바로 합류합니다',max:9},
   {id:'drone',name:'드론 편대',desc:'수리 드론 2기 추가, 수리 속도 +30%',max:2},
+  {id:'elite',name:'정예 소총병',desc:'소총병 피해 ×2.6 · 체력 ×2 · 대신 가격이 저격병보다 비싸집니다',max:1},
 ];
 const UPG=[
   {id:'atk',name:'탄약 개량',desc:'모든 병사 피해 +15%',base:120,g:1.45,max:20},
@@ -1628,10 +1629,11 @@ function damageStruct(s,dmg){
 }
 
 /* ---------- 병사 ---------- */
-function makeTroop(type,x,y){const td=T[type];const t={type,x,y,hp:td.hp,maxHp:td.hp,cd:rand(0,.5),state:'open',bunker:null,spot:null,aim:-Math.PI/2,flingT:0,vx:0,vy:0,flash:0,dead:false,id:++G.uid};G.troops.push(t);return t}
+function makeTroop(type,x,y){const td=T[type];const hp0=td.hp*(type==='rifle'&&ELITE()?2:1);const t={type,x,y,hp:hp0,maxHp:hp0,cd:rand(0,.5),state:'open',bunker:null,spot:null,aim:-Math.PI/2,flingT:0,vx:0,vy:0,flash:0,dead:false,id:++G.uid};G.troops.push(t);return t}
 function addTroopTo(type,b){const t=makeTroop(type,b.x,b.y);t.state='in';t.bunker=b;b.troops.push(t);return t}
 const T_STEP={rifle:6,sniper:15};
-function troopCost(type){let n=0;if(G)for(const t of G.troops)if(t.type===type&&!t.dead)n++;return T[type].cost+T_STEP[type]*n}
+const ELITE=()=>!!(G&&G.perk.elite);
+function troopCost(type){let n=0;if(G)for(const t of G.troops)if(t.type===type&&!t.dead)n++;if(type==='rifle'&&ELITE())return 140+15*n;return T[type].cost+T_STEP[type]*n}
 function buyTroop(type){
   const td=T[type],cost=troopCost(type);
   if(troopLoad()>=110){toast('병력 한도에 도달했습니다',DIM);sfx.nope();return}
@@ -1649,6 +1651,9 @@ function garrison(t){
   if(best){releaseSpot(t);best.troops.push(t);t.bunker=best;t.state='walk';return true}
   return false;
 }
+const OUT_CD=12;
+function ejectTroop(b,type){let t=null;for(let i=b.troops.length-1;i>=0;i--)if(b.troops[i].type===type){t=b.troops[i];b.troops.splice(i,1);break}
+  if(!t)return;t.bunker=null;t.state='open';t.outT=OUT_CD;t.x=b.x+rand(-10,10);t.y=b.y+(FLIP?-14:14);t.popT=.3;sfx.click();toast(T[type].name+' 대기 · '+OUT_CD+'초 뒤 재배치',AMBER)}
 function hurtTroop(t,d){if(t.dead)return;t.hp-=d;t.flash=.1;if(t.hp<=0)killTroop(t)}
 function killTroop(t){
   t.dead=true;releaseSpot(t);
@@ -1664,7 +1669,7 @@ function troopOrigin(t){
   return{x:t.x+Math.cos(t.aim)*L,y:t.y+Math.sin(t.aim)*L};
 }
 function updTroop(t,dt){
-  t.flash-=dt;if(t.popT>0)t.popT-=dt;const ox0=t.x,oy0=t.y;t.moving=false;
+  t.flash-=dt;if(t.outT>0)t.outT-=dt;if(t.popT>0)t.popT-=dt;const ox0=t.x,oy0=t.y;t.moving=false;
   if(t.flingT>0){t.flingT-=dt;t.x+=t.vx*dt;t.y+=t.vy*dt;t.vx*=.92;t.vy*=.92;t.x=clamp(t.x,4,W-4);return}
   if(t.state==='walk'){
     const b=t.bunker;if(!b||b.dead){t.state='open';t.bunker=null}
@@ -1694,7 +1699,7 @@ function troopFire(t){
   return true;
 }
 function shootRifle(o,tg){
-  const[d,crit]=rollDmg(T.rifle.dmg*(1+.08*mlv('rifle')));
+  const[d,crit]=rollDmg(T.rifle.dmg*(1+.08*mlv('rifle'))*(ELITE()?2.6:1));
   const hx=tg.x+rand(-tg.r*.5,tg.r*.5),hy=tg.y+rand(-tg.r*.45,tg.r*.4);
   tracers.push({x1:o.x,y1:o.y,x2:hx,y2:hy,life:.06,ml:.06,w:1,c:'255,214,130'});
   addP(FLASH,o.x,o.y,0,0,.05,4,'fire');
@@ -1756,7 +1761,7 @@ function updBuild(s,dt){
   if(s.bp>=1){s.building=false;s.born=0;if(dr){dr.build=null;dr.bld=false}s.builder=null;
     sfx.build();shake(.06);for(let i=0;i<12;i++)addP(SMOKE,s.x+rand(-26,26),s.y+rand(-12,14),rand(-20,20),rand(-20,5),rand(.5,.9),rand(6,11),'#6d6152');
     addText(s.x,s.y-30,KIND_NAME[s.kind]+' 완공',AMBER,13);
-    if(s.kind==='bunker')for(const t of G.troops)if(t.state==='open'&&!t.dead)garrison(t)}
+    if(s.kind==='bunker')for(const t of G.troops)if(t.state==='open'&&!t.dead&&!(t.outT>0))garrison(t)}
 }
 function pickRepair(dr){
   let best=null,bs=1e9;
@@ -1813,7 +1818,7 @@ function findTarget(e,maxD){
   let best=null,bd=maxD;
   for(const s of G.structs){const d=distTo(e,s);if(d<bd){bd=d;best=s}}
   const db=distTo(e,G.base);if(db<bd){bd=db;best=G.base}
-  if(e.y>300)for(const t of G.troops){if(t.state==='in'||t.dead)continue;t.isTroop=true;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<bd-6){bd=d;best=t}}
+  if(e.y>300){let tb=null,td=maxD;for(const t of G.troops){if(t.state==='in'||t.dead)continue;t.isTroop=true;const d=Math.hypot(t.x-e.x,t.y-e.y);if(d<td){td=d;tb=t}}if(tb)return tb}
   return best;
 }
 function gapSteer(e){
@@ -2123,7 +2128,7 @@ function update(dt,rdt){
       for(let i=0;i<4;i++)addP(SPARK,px,py,rand(-80,80),rand(-90,20),rand(.1,.25),1.2,'#ffe2b0');
       addP(SMOKE,px,py,0,-10,.5,5,'#5a5048');
     }
-    if(e.d.melee&&e.y>495&&e.cd<=0){for(const t of G.troops){if(t.state==='in'||t.dead)continue;if(Math.hypot(t.x-e.x,t.y-e.y)<e.r+3){hurtTroop(t,e.dmg);e.cd=e.d.rate;e.lunge=.15;break}}}
+    if(e.d.melee&&e.y>ROW_Y[2]-10&&e.cd<=0){for(const t of G.troops){if(t.state==='in'||t.dead)continue;if(Math.hypot(t.x-e.x,t.y-e.y)<e.r+3){hurtTroop(t,e.dmg);e.cd=e.d.rate;e.lunge=.15;break}}}
     if(!e.breached&&e.y>ROW_Y[2]+17+e.r*.2){e.breached=true;if(G.breachT<=0&&!G.over){toast('방어선 돌파!',DANGER);sfx.alarm()}G.breachT=2.5}
   }
   if(G.enemies.some(e=>e.dead))G.enemies=G.enemies.filter(e=>!e.dead);
@@ -2138,7 +2143,7 @@ function update(dt,rdt){
   if(G.perk.regen&&!G.over)G.base.hp=Math.min(G.base.maxHp,G.base.hp+G.base.maxHp*.004*G.perk.regen*dt);
 
   G.garT-=dt;
-  if(G.garT<=0){G.garT=.35;for(const t of G.troops)if(t.state==='open'&&t.flingT<=0&&!t.dead)garrison(t)}
+  if(G.garT<=0){G.garT=.35;for(const t of G.troops)if(t.state==='open'&&t.flingT<=0&&!t.dead&&!(t.outT>0))garrison(t)}
   for(const t of G.troops)if(!t.dead)updTroop(t,dt);
   if(G.troops.some(t=>t.dead))G.troops=G.troops.filter(t=>!t.dead);
   for(const dr of G.drones)updDrone(dr,dt);
@@ -2301,7 +2306,7 @@ function drawStruct0(s){
 const ICO={};function icoImg(k){if(!ICO[k]){try{const im=new Image();im.src=UI_ICONS[k];ICO[k]=im}catch(e){return null}}return ICO[k]}
 const MUZ={rifle:[.94,.01],sniper:[.97,.015]};
 function troopFlip(t){return Math.cos(t.aim)<-.3}
-function drawTroop(t){const _m=mirY(t.y+1);drawTroop0(t);if(_m)ctx.restore()}
+function drawTroop(t){const _m=mirY(t.y+1);drawTroop0(t);if(t.outT>0&&t.state==='open'){const c=ctx,f=t.outT/OUT_CD;c.save();c.lineWidth=1.6;c.strokeStyle='rgba(0,0,0,.6)';c.beginPath();c.arc(t.x,t.y-15,4.2,0,TAU);c.stroke();c.strokeStyle=AMBER;c.beginPath();c.arc(t.x,t.y-15,4.2,-Math.PI/2,-Math.PI/2+TAU*(1-f));c.stroke();c.restore()}if(_m)ctx.restore()}
 function drawTroop0(t){
   const u=UNIT[t.type];
   if(u){const c=ctx,bob=t.moving?Math.abs(Math.sin(G.t*14+t.id))*-1.4:0,fl=troopFlip(t),col=t.type==='sniper'?'122,233,255':'255,178,62';
@@ -2560,12 +2565,13 @@ function openMenu(row,col){
   const add=(label,cost,fn,off)=>{const b=document.createElement('button');b.innerHTML=label+(cost!=null?`<small>${cost}</small>`:'');if(off)b.className='off';b.addEventListener('click',ev=>{ev.stopPropagation();fn()});menu.appendChild(b)};
   if(!s&&row===3){const tc=tankCost();add(`탱크 ${nTanks()}/${TANK_MAX}`,tc,()=>{if(build('tank',row,col))closeMenu()},G.money<tc||nTanks()>=TANK_MAX||troopLoad()+TANK_SLOTS>110);}
   else if(!s){
-    add('벙커',100,()=>{if(build('bunker',row,col)){closeMenu();for(const t of G.troops)if(t.state==='open')garrison(t)}},G.money<100);
+    add('벙커',100,()=>{if(build('bunker',row,col)){closeMenu();for(const t of G.troops)if(t.state==='open'&&!(t.outT>0))garrison(t)}},G.money<100);
     add('장벽',50,()=>{if(build('wall',row,col))closeMenu()},G.money<50);
   }else if(s.building){
     add(`건설 중 ${Math.floor(s.bp*100)}%`,null,()=>{},true);
     add('건설 취소','+'+s.cost,()=>{G.money+=s.cost;removeStruct(s);sfx.click();closeMenu()});
   }else{
+    if(s.kind==='bunker'){for(const ty of ['rifle','sniper']){const n=s.troops.filter(t=>t.type===ty).length;if(n)add(`${T[ty].name} 내보내기`,`${n}명`,()=>{ejectTroop(s,ty);openMenu(row,col)})}}
     const rc=repairCost(s);
     add('긴급 수리',rc,()=>{if(manualRepair(s))openMenu(row,col)},G.money<rc||s.hp>=s.maxHp-1);
     add('철거','+'+Math.round((s.kind==='tank'?s.cost:(KIND_COST[s.kind]||50))*.5),()=>{sell(s);closeMenu()});
@@ -2598,7 +2604,7 @@ cv.addEventListener('pointerup',e=>{if(!ptr)return;const p=ptr;ptr=null;if(!p.dr
 cv.addEventListener('pointercancel',()=>{ptr=null});
 
 const UPG_IC={atk:'iaim',rate:'iclock',armor:'irank',scope:'@sniper',eco:'kitbox',eng:'@drone',fix:'revive'};
-const PERK_IC={chain:'skull',pierce:'@sniper',double:'@rifle',crit:'iaim',regen:'revive',bounty:'kitbox',orbital:'@orb',concrete:'@@bunker',expand:'squad',adren:'iclock',reinf:'squad',drone:'@drone'};
+const PERK_IC={chain:'skull',pierce:'@sniper',double:'@rifle',crit:'iaim',regen:'revive',bounty:'kitbox',orbital:'@orb',concrete:'@@bunker',expand:'squad',adren:'iclock',reinf:'squad',drone:'@drone',elite:'irank'};
 function kIco(ic){ic=ic||'icog';return ic.startsWith('@@')?`url(${IMG_SRC[ic.slice(2)]})`:ic.startsWith('@')?`url(${UI_ICONS[ic.slice(1)]})`:`var(--a-${ic})`}
 function renderUpg(){
   upg.innerHTML='<header><b>기지 강화</b><button id="upgClose" aria-label="닫기">✕</button></header>';
@@ -2669,6 +2675,7 @@ function takePerk(p){
   if(p.id==='concrete'){for(const s of G.structs){const r=s.hp/s.maxHp;s.maxHp=structMax(s.kind);s.hp=s.maxHp*r}}
   if(p.id==='reinf'){for(let i=0;i<4;i++)later(i*.15,()=>spawnTroop('rifle'));later(.7,()=>spawnTroop('sniper'))}
   if(p.id==='drone'){addDrone();addDrone()}
+  if(p.id==='elite'){for(const t of G.troops)if(!t.dead&&t.type==='rifle'){t.maxHp*=2;t.hp*=2}}
   $('ovPerk').hidden=true;state='play';sfx.cash();toast(p.name+' 획득',AMBER);
 }
 
@@ -3019,7 +3026,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=57,WEB_NAME='1.10.3';
+const WEB_BUILD=58,WEB_NAME='1.11.0';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
@@ -3041,7 +3048,7 @@ const WEB_BUILD=57,WEB_NAME='1.10.3';
     if(G&&state==='play')toast('업데이트 준비됨 · 로비에서 적용',AMBER);
   };
 })();
-window.__kx={openPerk,TUNE,repair:s=>manualRepair(s),strike:(x,y)=>strike(x,y),upCost:u=>upCost(u),UPG,meta:()=>META,setMeta:m=>{Object.assign(META,m);saveMeta();renderLab()},toLobby:()=>toLobby(),setView:i=>setView(i),get G(){return G},get state(){return state},start:startGame,build,buyTroop,buyDrone,buyUpg:id=>buyUpg(UPG.find(u=>u.id===id)),takePerk:i=>{const b=$('perkList').querySelectorAll('.perk')[i];if(b)b.click()},
+window.__kx={openPerk,ejectTroop,openMenu,TUNE,repair:s=>manualRepair(s),strike:(x,y)=>strike(x,y),upCost:u=>upCost(u),UPG,meta:()=>META,setMeta:m=>{Object.assign(META,m);saveMeta();renderLab()},toLobby:()=>toLobby(),setView:i=>setView(i),get G(){return G},get state(){return state},start:startGame,build,buyTroop,buyDrone,buyUpg:id=>buyUpg(UPG.find(u=>u.id===id)),takePerk:i=>{const b=$('perkList').querySelectorAll('.perk')[i];if(b)b.click()},
   render:()=>render(),step(sec,h=1/60){for(let t=0;t<sec;t+=h){if(state==='play'||state==='over'){update(h,h)}}},strike};
 
 const SPLASH_T0=performance.now();let spReady=false,spDone=false;
