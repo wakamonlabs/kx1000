@@ -1,6 +1,6 @@
 {
-  "version": 49,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/2acd8a24-3778-49ef-b787-32f33674d3e0.zip",
-  "sha256": "68a09924c1d3712e0a69e6a20d3f9f390d30ea2bf188052a301992737aa87369",
-  "note": "1.8.3 인트로 중 새 버전 자동 적용"
+  "version": 50,
+  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/03ca8ff5-ace7-4197-9cb1-918b3368910b.zip",
+  "sha256": "fa958064ed193304282782482c11f76477a9d2f2f00557f1e3829d29fa0dfff3",
+  "note": "1.8.4 구역 카드 눌러 전체 구역 선택"
 }
