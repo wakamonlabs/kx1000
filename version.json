@@ -1,6 +1,6 @@
 {
-  "version": 44,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/12f57ffc-61b8-4dc8-be7a-7125685ff1e4.zip",
-  "sha256": "2be695de42b21de5254d513428898e0de1d40ee50cdf003f0f83370f31b3aa0a",
-  "note": "1.7.3 테스트용 전 구역 개방, 전투 중 일시정지에 설정 통합"
+  "version": 45,
+  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/bd496855-deca-4e7b-b9fe-51189023dfb0.zip",
+  "sha256": "e872e6d1e07c882e3d650ae0a179bbe917c382d59a23c355b259add7dbeed7c4",
+  "note": "1.7.4 일시정지 화면에 설정 내장, 버전 표시 개선"
 }
