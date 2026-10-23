@@ -1,6 +1,6 @@
 {
- "version": 56,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b7f76457-9aa1-4ebe-b756-51327113dabc.zip",
- "sha256": "6da3ac2da0a73e1db3ae9dd07c86a7cd1c610a83c983d978dd8f1c1d3ba35a02",
- "note": "v1.10.2: 보급품 선택 카드 세로형"
+ "version": 57,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/8ecef867-b4c5-407e-b68d-6869cba75a8f.zip",
+ "sha256": "0d2f17f33b5a5252d5235c61e987a67c5b94f7ad176ac34da37a45f5827c5256",
+ "note": "v1.10.3: PC 미리보기 폭 보정, 넓은 화면 기지 채움"
 }
