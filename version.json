@@ -1,6 +1,6 @@
 {
-  "version": 50,
-  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/03ca8ff5-ace7-4197-9cb1-918b3368910b.zip",
-  "sha256": "fa958064ed193304282782482c11f76477a9d2f2f00557f1e3829d29fa0dfff3",
-  "note": "1.8.4 구역 카드 눌러 전체 구역 선택"
+  "version": 51,
+  "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/632881f0-8d4d-47cd-9d36-9c85a276ce24.zip",
+  "sha256": "08a97f488d82fee97c5cd6904a61923e032c0598c47ebb6105b055287940c45e",
+  "note": "1.9.0 도감 종족 소개, 맵 선 제거, 결제 테스트 지급"
 }
