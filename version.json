@@ -1,6 +1,6 @@
 {
- "version": 64,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b7bc081b-4070-485c-8655-22c67a0471da.zip",
- "sha256": "25b216ecb388eabf6879f6156a3e21473bccd712488b04794c4762bf0c0b7dc3",
- "note": "v1.14.1: 크롤러 원래 그림으로 복구"
+ "version": 65,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/5ab0b935-8972-44de-bef8-eded38a3994c.zip",
+ "sha256": "9e33cd93a9d1afe46e8f5324ebc7e7436c3c6a2b6d147dc01a250a35e86a6050",
+ "note": "v1.15.0: 크롤러 4프레임 걷기 스프라이트 시트"
 }
