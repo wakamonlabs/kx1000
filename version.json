@@ -1,6 +1,6 @@
 {
- "version": 72,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b0751517-9e88-48fe-909f-fce8c7293ecb.zip",
- "sha256": "615d372c801c589ca7c9fb94a88c7ec2e9e5ca472a2832b24ff3ff0d51e8b9b5",
- "note": "v1.19.0: 벙커 증설·탱크 최대 수, 교체 우선순위, 적 걷기·공격 모션, 지뢰 부설기·브루드마더 소환"
+ "version": 73,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/bef7edce-e72f-4bcb-9bb4-68916febb9d0.zip",
+ "sha256": "94e8fb82c6cf17ac7e79730ba89be6d3ddd5f20e0227dd6a0a83bff7076217f7",
+ "note": "v1.19.1: 적 모션 24프레임으로 부드럽게, 성능 표시(테스트)"
 }
