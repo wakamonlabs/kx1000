@@ -1,6 +1,6 @@
 {
- "version": 63,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/a036557c-e3bb-4eef-b4e6-292976c9f37a.zip",
- "sha256": "431cee154ce66b86045ea19b3889999be533af5e545244e45b2712fe867e81eb",
- "note": "v1.14.0: 사령부 테크(병과 Mk 업그레이드·탱크·전투기), 크롤러 걷기 모션 시범"
+ "version": 64,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/b7bc081b-4070-485c-8655-22c67a0471da.zip",
+ "sha256": "25b216ecb388eabf6879f6156a3e21473bccd712488b04794c4762bf0c0b7dc3",
+ "note": "v1.14.1: 크롤러 원래 그림으로 복구"
 }
