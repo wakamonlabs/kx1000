@@ -1,6 +1,6 @@
 {
- "version": 68,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/03b9fbb7-eabb-4cb7-9d7e-8884c4fa7ce1.zip",
- "sha256": "f34eba720bc00e2dcabd716a786373b29672367b4f3f6f47173a93facfcf8bd6",
- "note": "v1.17.0: 적 30종(뒷모습 새 그림·걷기 모션), 도감 30종 등록"
+ "version": 69,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/1bc7c88e-8bc0-49c7-8fce-01df12539d9f.zip",
+ "sha256": "a117fe5cd4803b74e1f8b5fff061160ea5e9cb976711fcbe8847a78eba36d00c",
+ "note": "v1.17.1: 테스트용 도감 전체 공개"
 }

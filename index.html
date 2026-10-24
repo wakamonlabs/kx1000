@@ -2967,6 +2967,7 @@ const lifeSq=()=>Math.floor((META.tk|0)/SQ);
 function zoneTotal(z){const Z=ZONES[z];let n=0;for(let w=1;w<=Z.waves;w++){let k=Math.floor((10+4*w+Math.pow(w,1.45)*.6)*(1+.7*(1-earlyF(w))));if(w%7===0)k=Math.floor(k*1.5);n+=k;if(w%10===0)n+=w/10}return n+1}
 
 const DEV_ALL_ZONES=true;/* 출시 전 false */
+const DEV_DEX_ALL=true;/* 출시 전 false: 도감 미발견 유닛도 보이게(테스트용) */
 const stageOpen=i=>DEV_ALL_ZONES||i<=(META.zc|0);
 const hellOpen=()=>best.wave>=15;
 const myPower=()=>{let p=100;for(const r of RESEARCH)p+=mlv(r.id)*22;return p+brank()*160};
@@ -3095,7 +3096,7 @@ function renderDex(B){
     ['facS','소포이','ΣΟΦΟΙ','고등 종족','헬라어로 <b>지혜로운 자들</b>. 깊은 우주에서 우연히 마주친 오래된 문명. 진주빛 껍질과 금 장식, 청록 에너지로 싸운다. 수는 적지만 하나하나가 강하다. 10종 + 수호자 타이탄.']];
   const fi=B._fac||0;
   let h=`<div class="kfac">`+FAC.map((f,i)=>`<div class="kfc ${['','theria','sophoi'][i]}${i===fi?' on':''}" data-f="${i}"><i class="em" style="background-image:var(--a-${f[0]})"></i><b>${f[1]}<i>${f[2]}</i></b>${f[3]?`<span class="tag">${f[3]}</span>`:''}</div>`).join('')+`</div><div class="kfd">${FAC[fi][4]}</div><p class="khint">적을 처치할수록 별이 오르고, 별마다 코인을 받아요</p><div class="kdex">`;
-  for(const d of DEX.filter(x=>ET[x[0]].fac===DEX_FAC[fi])){const [k,name,desc,t]=d,n=META.kt[k]|0,st=dexStep(k),rd=dexReady(d),unk=n===0;
+  for(const d of DEX.filter(x=>ET[x[0]].fac===DEX_FAC[fi])){const [k,name,desc,t]=d,n=META.kt[k]|0,st=dexStep(k),rd=dexReady(d),unk=n===0&&!DEV_DEX_ALL;
     let s='';for(let i=0;i<3;i++)s+=`<i class="${n>=t[i]?'f':''}"></i>`;
     h+=`<div class="kdx${unk?' unk':''}${rd?' ready':''}"><i class="pic" style="background-image:url(${IMG_SRC[k]})"></i><b>${unk?'???':name}</b><div class="stars">${s}</div><small>${unk?'아직 마주치지 않았어요':desc}</small><small style="margin-top:.2em">처치 ${fmt(n)}${st<3?' / '+fmt(t[st]):''}</small>
       ${st<3?`<button class="kb sm ${rd?'gold':'dark off'}" data-x="${k}">${rd?'보상 '+DEX_RW[st].gem:'별 '+(st+1)}${ai('gem')}</button>`:'<small style="color:#9be38a">완성</small>'}</div>`}
@@ -3262,7 +3263,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=68,WEB_NAME='1.17.0';
+const WEB_BUILD=69,WEB_NAME='1.17.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
