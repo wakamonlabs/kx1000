@@ -1,6 +1,6 @@
 {
- "version": 70,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cd60a6ff-241f-46d8-b7f4-26fc8f71a23b.zip",
- "sha256": "725b82213f1517bee03e24582ef5d8260874071bc844020c2612174f5ad61888",
- "note": "v1.18.0: 코인 메인 재화 통일·코어 충전, 로딩 화면, 도감 상세"
+ "version": 71,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/e169d0a8-a9bd-49db-832f-345a87cc5f99.zip",
+ "sha256": "3ad9957ae691051cda6ec41f10f6ca6c2aa55c64dd8f9cfc2c4717777018e820",
+ "note": "v1.18.1: 폰트 글자 누락 수정, 디자인 점검"
 }
