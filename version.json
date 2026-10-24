@@ -1,6 +1,6 @@
 {
- "version": 66,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cb36577f-4e7f-495b-9c97-905063dc9786.zip",
- "sha256": "f4da117e5a0af694e873db0a7391f22c207f0d18f26d3b223a04c49e4acd0290",
- "note": "v1.15.1: 크롤러 걷기 8프레임으로 부드럽게"
+ "version": 67,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/962fa1f3-1a3b-4a97-9470-bf52bd697cb3.zip",
+ "sha256": "a387c443061877bbcbf51627a9336058e4cd50c7567ef7bf53ab3bdedc06e3b7",
+ "note": "v1.16.0: 크롤러 영상 기반 12프레임 걷기, 보급품 다시 뽑기(코인 10), 사령부 재건(코인 50)"
 }
