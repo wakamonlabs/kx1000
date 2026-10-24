@@ -1,6 +1,6 @@
 {
- "version": 62,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/796320c3-be36-4150-97dc-ca6bad46920b.zip",
- "sha256": "9b44c64cab91e54610e3de3d287fae41ec664e35e8e912d5c0cc63db3cb23e9b",
- "note": "v1.13.1: 적이 사령부 쪽을 바라보도록 방향 수정"
+ "version": 63,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/a036557c-e3bb-4eef-b4e6-292976c9f37a.zip",
+ "sha256": "431cee154ce66b86045ea19b3889999be533af5e545244e45b2712fe867e81eb",
+ "note": "v1.14.0: 사령부 테크(병과 Mk 업그레이드·탱크·전투기), 크롤러 걷기 모션 시범"
 }
