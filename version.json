@@ -1,6 +1,6 @@
 {
- "version": 67,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/962fa1f3-1a3b-4a97-9470-bf52bd697cb3.zip",
- "sha256": "a387c443061877bbcbf51627a9336058e4cd50c7567ef7bf53ab3bdedc06e3b7",
- "note": "v1.16.0: 크롤러 영상 기반 12프레임 걷기, 보급품 다시 뽑기(코인 10), 사령부 재건(코인 50)"
+ "version": 68,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/03b9fbb7-eabb-4cb7-9d7e-8884c4fa7ce1.zip",
+ "sha256": "f34eba720bc00e2dcabd716a786373b29672367b4f3f6f47173a93facfcf8bd6",
+ "note": "v1.17.0: 적 30종(뒷모습 새 그림·걷기 모션), 도감 30종 등록"
 }
