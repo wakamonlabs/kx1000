@@ -1,6 +1,6 @@
 {
- "version": 65,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/5ab0b935-8972-44de-bef8-eded38a3994c.zip",
- "sha256": "9e33cd93a9d1afe46e8f5324ebc7e7436c3c6a2b6d147dc01a250a35e86a6050",
- "note": "v1.15.0: 크롤러 4프레임 걷기 스프라이트 시트"
+ "version": 66,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cb36577f-4e7f-495b-9c97-905063dc9786.zip",
+ "sha256": "f4da117e5a0af694e873db0a7391f22c207f0d18f26d3b223a04c49e4acd0290",
+ "note": "v1.15.1: 크롤러 걷기 8프레임으로 부드럽게"
 }
