@@ -1,6 +1,6 @@
 {
- "version": 69,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/1bc7c88e-8bc0-49c7-8fce-01df12539d9f.zip",
- "sha256": "a117fe5cd4803b74e1f8b5fff061160ea5e9cb976711fcbe8847a78eba36d00c",
- "note": "v1.17.1: 테스트용 도감 전체 공개"
+ "version": 70,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cd60a6ff-241f-46d8-b7f4-26fc8f71a23b.zip",
+ "sha256": "725b82213f1517bee03e24582ef5d8260874071bc844020c2612174f5ad61888",
+ "note": "v1.18.0: 코인 메인 재화 통일·코어 충전, 로딩 화면, 도감 상세"
 }
