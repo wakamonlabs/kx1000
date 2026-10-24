@@ -1,6 +1,6 @@
 {
- "version": 61,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/51392ecc-5a75-49ff-8c12-63c5a9a7a986.zip",
- "sha256": "df29e51c98c3e684c49e29e277bd47db0e8e339bb30d72c3702803e5261b84fd",
- "note": "v1.13.0: 종족별 적 디자인(자르곤 기계 군단 신규 3종), 1부대=12마리, 보급품 더 자주, 조준경 개조"
+ "version": 62,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/796320c3-be36-4150-97dc-ca6bad46920b.zip",
+ "sha256": "9b44c64cab91e54610e3de3d287fae41ec664e35e8e912d5c0cc63db3cb23e9b",
+ "note": "v1.13.1: 적이 사령부 쪽을 바라보도록 방향 수정"
 }
