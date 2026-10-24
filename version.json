@@ -1,6 +1,6 @@
 {
- "version": 60,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f0365773-41eb-4dfb-90a4-71e6e1541122.zip",
- "sha256": "78330dfe342a0d0b83ee05e0e81cabdacc33da12ff790bc1f36a329fbd88436b",
- "note": "v1.12.0: 결과 화면 개편, 코인 새 디자인, 에너지 50, 탱크 사거리 3배, 구역 확보 후 공백 단축"
+ "version": 61,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/51392ecc-5a75-49ff-8c12-63c5a9a7a986.zip",
+ "sha256": "df29e51c98c3e684c49e29e277bd47db0e8e339bb30d72c3702803e5261b84fd",
+ "note": "v1.13.0: 종족별 적 디자인(자르곤 기계 군단 신규 3종), 1부대=12마리, 보급품 더 자주, 조준경 개조"
 }
