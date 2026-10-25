@@ -1,6 +1,6 @@
 {
- "version": 77,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/82830330-e99d-40fb-a577-6bf6a17bc6d4.zip",
- "sha256": "e05a6933cdd5aa576acb31387fe9c05493545a17cd4bddb07f6b6f700159ef87",
- "note": "v1.20.2: 로비 구역 카드·출격 버튼 디자인 정리"
+ "version": 78,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/80352798-7962-4879-8985-e04d95478076.zip",
+ "sha256": "b85a999e666d17f3f9fb31e156f232ca678c712ae196e08f83f2b8039ed03137",
+ "note": "v1.20.3: 하단 메뉴 아이콘 평소엔 작게, 누른 탭만 커지게"
 }

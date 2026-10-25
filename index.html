@@ -446,6 +446,18 @@ button.kcur:active{transform:translateY(.12em)}
 .kt.main img{width:46px;height:46px}
 .kt.main.on{filter:drop-shadow(0 0 6px rgba(255,220,120,.8))}
 .kt:active{transform:scale(.94)}
+/* v1.20.3 하단 탭: 평소엔 작게, 누른 탭만 커지게 */
+#lnav{display:flex!important;align-items:flex-end}
+#lnav .kt{flex:1 1 0;min-width:0;height:62px;transition:flex-grow .3s cubic-bezier(.3,1.4,.5,1),height .25s,filter .2s;filter:saturate(.7) brightness(.82)}
+#lnav .kt img,#lnav .kt .ai{width:32px;height:32px;margin-bottom:2px;transition:transform .32s cubic-bezier(.3,1.7,.5,1)}
+#lnav .kt span{font-size:0;opacity:0;transition:opacity .2s,font-size .2s}
+#lnav .kt.on{flex-grow:1.7;height:76px;filter:drop-shadow(0 0 6px rgba(255,210,110,.55))}
+#lnav .kt.on img,#lnav .kt.on .ai{transform:translateY(-12px) scale(1.5)}
+#lnav .kt.on span{font-size:13px;opacity:1}
+#lnav .kt.main img{width:34px;height:34px}
+#lnav .kt.on.pop img,#lnav .kt.on.pop .ai{animation:tabPop .38s cubic-bezier(.3,1.7,.5,1)}
+@keyframes tabPop{0%{transform:translateY(0) scale(1)}55%{transform:translateY(-16px) scale(1.7)}100%{transform:translateY(-12px) scale(1.5)}}
+#lnav .kt:active:not(.on) img,#lnav .kt:active:not(.on) .ai{transform:scale(.88)}
 /* 패널 (상점·연구소·기지·기록) */
 .kpane{position:absolute;left:.6em;right:.6em;top:3.2em;bottom:.5em;display:flex;flex-direction:column;background:linear-gradient(#45311f,#2c1e14 40%,#24180f);border:.15em solid var(--kk);border-radius:.7em;box-shadow:0 .28em 0 var(--kk),inset 0 .1em 0 rgba(255,220,170,.12);overflow:hidden}
 .kpane::before{content:'';position:absolute;left:0;right:0;top:0;height:.45em;z-index:2;background:repeating-linear-gradient(135deg,var(--hz) 0 .7em,var(--kk) .7em 1.4em)}
@@ -3385,7 +3397,7 @@ const KIND_NAME={bunker:'벙커',wall:'장벽',tank:'탱크'};const wallCost=()=
 const TANK_X=[52,137,223,308],TANK_Y=520,TANK_SLOTS=12;const tankMax=()=>hq('tank')?Math.min(4,[0,0,1,2,3][hqLv()]+(hq('tank2')?1:0)+(isDoc('armor')?1:0)):0;const nTanks=()=>G?G.structs.filter(s=>s.kind==='tank'&&!s.dead).length:0;const tankCost=()=>Math.round((KIND_COST.tank+160*nTanks())*(isDoc('armor')?.6:1));const troopLoad=()=>G.troops.length+TANK_SLOTS*nTanks();
 function setTab(t){
   curTab=t;
-  for(const b of document.querySelectorAll('#lnav .kt'))b.classList.toggle('on',b.dataset.tab===t);
+  for(const b of document.querySelectorAll('#lnav .kt')){const on=b.dataset.tab===t,was=b.classList.contains('on');b.classList.toggle('on',on);if(on&&!was){b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}}
   for(const p of document.querySelectorAll('#ovTitle [data-p]'))p.hidden=p.dataset.p!==t;
   if(t==='hq')renderHQ();if(t==='base')renderBaseTab();if(t==='lab')renderLab();if(t==='shop')renderShop();if(t==='home')renderHome();
   refreshLobby();
@@ -3509,7 +3521,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=77,WEB_NAME='1.20.2';
+const WEB_BUILD=78,WEB_NAME='1.20.3';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
