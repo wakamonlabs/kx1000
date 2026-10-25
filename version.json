@@ -1,6 +1,6 @@
 {
- "version": 74,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/a0dce93b-9708-4b5f-bb4b-6ecc8eeba292.zip",
- "sha256": "e51b29cdb7c19c1346f8f9a42fe088e955f3410368414bc51bc1fdbf3a3467a7",
- "note": "v1.19.2: 폴드 등 넓은 화면 로비 맞춤, 스플래시 재생 버튼 깜빡임 수정, 로딩 화면 크기"
+ "version": 75,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/14c1d3e4-1af3-48f1-bdb8-77ecf88c20cc.zip",
+ "sha256": "f0ec7fee82582be585e9d35027a04ad246ed9aa20b6333a82e8499808e9ff067",
+ "note": "v1.20.0: 작전 교리(사령부 요새·기갑 사단·보급 우선), 벙커 체력 표시, 적 크기 흔들림 수정, 스플래시 크기"
 }
