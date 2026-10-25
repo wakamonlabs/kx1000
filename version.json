@@ -1,6 +1,6 @@
 {
- "version": 76,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/570bf1c4-205d-46d6-b33d-4fa60bf23ad0.zip",
- "sha256": "380795624e7581d9f96196fa876a8c76c00b98f0a7ac25b66601bfeee18cbfb6",
- "note": "v1.20.1: 출격 때 작전 교리 3개 중 선택(12종), 설명 간단하게"
+ "version": 77,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/82830330-e99d-40fb-a577-6bf6a17bc6d4.zip",
+ "sha256": "e05a6933cdd5aa576acb31387fe9c05493545a17cd4bddb07f6b6f700159ef87",
+ "note": "v1.20.2: 로비 구역 카드·출격 버튼 디자인 정리"
 }

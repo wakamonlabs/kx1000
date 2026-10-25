@@ -378,12 +378,14 @@ button.kcur:active{transform:translateY(.12em)}
 .kmode button.hell.on{color:#fff;text-shadow:0 .08em 0 #400;background:linear-gradient(#ff6a4d,#c2161f);box-shadow:inset 0 -.14em 0 #7a0a10,inset 0 .12em 0 rgba(255,255,255,.4),0 .1em .35em rgba(255,70,50,.5)}
 .kmode button.lock{opacity:.6}
 .kmode button .ai{width:1em;height:1em}
-.kstage{display:flex;align-items:center;gap:.45em}
+.kstage{position:relative;margin:0 .15em}
+.kstage .karr{position:absolute;top:2.55em;z-index:3;width:2.1em;height:2.1em;margin-top:-1.05em;filter:drop-shadow(0 .12em .15em rgba(0,0,0,.7))}
+.kstage .karr:not(.r){left:-.55em}.kstage .karr.r{right:-.55em}
 .karr{flex:none;width:2.35em;height:2.35em;border:0;padding:0;background:var(--a-arrL) center/contain no-repeat;cursor:pointer}
 .karr.r{background-image:var(--a-arrR)}
 .karr:disabled{opacity:.4;cursor:default}
 .karr:active:not(:disabled){transform:scale(.92)}
-.kcard{position:relative;flex:1;min-width:0;min-height:4.6em;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:.45em .8em .55em 3.6em;border-radius:.7em;background:linear-gradient(90deg,rgba(20,12,7,.25),rgba(20,12,7,.6)),var(--stbg,linear-gradient(#5a3a22,#2a1a10)) center/cover;border:.15em solid var(--kk);box-shadow:0 .24em 0 var(--kk),inset 0 0 0 .14em #ff9a3a,inset 0 0 1.2em rgba(255,140,40,.35);overflow:hidden}
+.kcard{position:relative;display:grid;grid-template-columns:5.1em 1fr;grid-template-rows:auto auto;gap:.15em .7em;align-items:center;padding:.55em .95em .5em 1.35em;border-radius:.8em;background:linear-gradient(90deg,rgba(14,8,5,.92) 0%,rgba(14,8,5,.72) 55%,rgba(14,8,5,.55)),var(--stbg,linear-gradient(#5a3a22,#2a1a10)) center/cover;border:.15em solid var(--kk);box-shadow:0 .24em 0 var(--kk),inset 0 0 0 .12em rgba(255,178,62,.85),inset 0 0 1.4em rgba(255,140,40,.22);overflow:hidden}
 .kdoc{align-self:center;display:flex;align-items:center;gap:.45em;margin:.1em 0 .35em;padding:.28em .8em .28em .45em;border-radius:2em;border:.12em solid rgba(255,190,90,.55);background:rgba(12,7,4,.78);color:#f3e2c8;font:inherit;cursor:pointer;box-shadow:0 .15em 0 rgba(0,0,0,.5)}
 .kdoc .ai{width:1.6em;height:1.6em;background:center/contain no-repeat}
 .kdoc small{font-size:.66em;color:var(--dim)}
@@ -402,15 +404,33 @@ button.kcur:active{transform:translateY(.12em)}
 .docC em{position:absolute;right:.6em;top:.55em;font-style:normal;font-size:.68em;color:#ffd27a}
 .kcard.hell{box-shadow:0 .24em 0 var(--kk),inset 0 0 0 .14em #ff4b3a,inset 0 0 1.4em rgba(255,60,40,.5)}
 .kcard.locked{filter:grayscale(.75) brightness(.7)}
-.kcard .boss{position:absolute;left:.25em;top:50%;width:3.3em;height:3.3em;margin-top:-1.65em;background:center/contain no-repeat;filter:drop-shadow(0 .12em 0 rgba(0,0,0,.5))}
-.kcard small{font-family:var(--f-display);font-size:.78em;letter-spacing:.06em;color:var(--hz)}
-.kcard b{font-family:var(--f-display);font-weight:400;font-size:1.38em;line-height:1.15}
-.kcard span{font-size:.72em;color:#f0dcc4}
-.kcard em{font-style:normal;margin-top:.25em;font-family:var(--f-display);font-size:.72em;padding:.18em .7em;border-radius:.6em;background:rgba(10,6,3,.78);border:.1em solid rgba(255,190,90,.5)}
-.kcard em .bad{color:#ff8a70}.kcard em .ok{color:#9be38a}
+.kbossBox{position:relative;width:5.1em;height:5.1em;border-radius:.6em;background:radial-gradient(circle at 50% 45%,rgba(255,120,60,.28),rgba(0,0,0,.55) 70%),#120a06;border:.12em solid rgba(255,190,90,.55);box-shadow:inset 0 0 .8em rgba(0,0,0,.8)}
+.kcard .boss{position:absolute;inset:.25em .25em .7em;background:center/contain no-repeat;filter:drop-shadow(0 .15em .1em rgba(0,0,0,.7))}
+.kbl{position:absolute;left:50%;bottom:-.08em;transform:translateX(-50%);font-family:var(--f-display);font-size:.58em!important;letter-spacing:.08em;color:#ffe2b8!important;background:linear-gradient(#b8361f,#7a1a10);padding:.12em .7em .1em;border-radius:.5em .5em 0 0;white-space:nowrap}
+.kci{min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:.12em}
+.kchips{display:flex;flex-wrap:wrap;gap:.22em;margin-top:.12em}
+.kchips i{font-style:normal;font-size:.64em;line-height:1;padding:.32em .6em .3em;border-radius:1em;background:rgba(0,0,0,.5);border:.1em solid rgba(255,255,255,.14);color:#f0dcc4;white-space:nowrap}
+.kchips i.hp{color:#ffb19e;border-color:rgba(255,110,80,.4)}
+.kchips i.ok{color:#9be38a;border-color:rgba(130,220,110,.4)}
+.kpow{width:100%;margin-top:.18em;font-size:.62em;color:#e9d6bc}
+.kpow .t{display:flex;justify-content:space-between;margin-bottom:.22em}
+.kpow .t b{font-family:var(--f-num);font-size:1.05em;font-weight:700}
+.kpow .bar{display:block;height:.42em;border-radius:.3em;background:rgba(0,0,0,.6);box-shadow:inset 0 0 0 .08em rgba(255,255,255,.1);overflow:hidden}
+.kpow .bar u{display:block;height:100%;border-radius:.3em;background:linear-gradient(90deg,#ff6a4a,#ffb23e)}
+.kpow.ok .bar u{background:linear-gradient(90deg,#5fcf6a,#b8f27a)}
+.kpow .bad{color:#ff8a70}.kpow .ok{color:#9be38a}
+.krw{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:.4em;margin-top:.3em;padding-top:.35em;border-top:.08em dashed rgba(255,190,90,.3);font-size:.66em;color:#f3e2c8}
+.krw .ai{width:1.25em;height:1.25em}
+.krw b{font-family:var(--f-num);color:#ffd27a}
+.kcard .kci small{font-family:var(--f-display);font-size:.7em;letter-spacing:.05em;color:var(--hz)}
+.kcard .kci>b{font-family:var(--f-display);font-weight:400;font-size:1.42em;line-height:1.1;color:#fff;text-shadow:0 .08em 0 #000}
+
 .kgo{position:relative;aspect-ratio:760/210;margin:.1em -.3em -.1em;background:var(--a-go) center/100% 100% no-repeat}
 .kgo #btnStart{position:absolute;left:12%;right:12%;top:15%;bottom:24%;border:0;background:transparent;cursor:pointer;font-family:var(--f-display);font-size:2.1em;color:var(--kk);text-shadow:0 .06em 0 rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;gap:.25em;padding:0}
 .kgo #btnStart:active{transform:translateY(.05em) scale(.985)}
+.kgo .gl{line-height:1}
+.kgo .gcost{display:flex;align-items:center;gap:.05em;font-family:var(--f-num);font-weight:800;font-size:.38em;color:#ffe9a8;background:rgba(40,22,4,.85);border-radius:1em;padding:.22em .6em .22em .35em;box-shadow:inset 0 .08em 0 rgba(255,255,255,.15);text-shadow:none}
+.kgo .gcost .ai{width:1.3em;height:1.3em}
 .kgo.off{filter:grayscale(.85) brightness(.85)}
 .kgo .gnote{position:absolute;left:50%;bottom:-.35em;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-display);font-size:.7em;padding:.26em 1.5em .3em;background:var(--a-pillN) center/100% 100% no-repeat;color:var(--kfg)}
 /* 하단 탭 */
@@ -871,11 +891,15 @@ h2.big{color:var(--kfg);text-shadow:-.05em -.05em 0 var(--kk),.05em -.05em 0 var
           <div class="ktag" id="bestTxt"></div>
           <div class="kmode" id="kMode"><button type="button" data-m="0">방어전</button><button type="button" data-m="1" class="hell">지옥 방어전</button></div>
           <div class="kstage">
+            <div class="kcard" id="stCard">
+              <div class="kbossBox"><i class="boss" id="stBoss"></i><span class="kbl">보스</span></div>
+              <div class="kci"><small id="stNo">STAGE 1</small><b id="stName">착륙 지점</b><div class="kchips" id="stInfo"></div><div class="kpow" id="stPow"></div></div>
+              <div class="krw" id="goNote"></div>
+            </div>
             <button class="karr" id="stPrev" type="button" aria-label="이전 구역"></button>
-            <div class="kcard" id="stCard"><i class="boss" id="stBoss"></i><small id="stNo">STAGE 1</small><b id="stName">착륙 지점</b><span id="stInfo"></span><em id="stPow"></em></div>
             <button class="karr r" id="stNext" type="button" aria-label="다음 구역"></button>
           </div>
-          <div class="kgo" id="kGo"><button id="btnStart" type="button">출격!</button><span class="gnote ol" id="goNote"></span></div>
+          <div class="kgo" id="kGo"><button id="btnStart" type="button"><span class="gl">출격!</span><span class="gcost" id="goCost"></span></button></div>
         </section>
 
         <section class="kpane" data-p="shop" hidden>
@@ -3130,15 +3154,18 @@ function renderHome(){
   if(!stageOpen(selStage))selStage=0;
   const Z=ZONES[selStage],name=Z.name,boss=Z.boss,open=stageOpen(selStage),done=selStage<(META.zc|0);
   $('stNo').textContent=`구역 ${selStage+1} · ${Z.planet}${hell?' · 지옥':''}`;$('stName').textContent=name;
-  $('stInfo').textContent=open?`웨이브 ${Z.waves} · 적 체력 ${(Z.hpMul>=1?'+':'')+Math.round((Z.hpMul-1)*100)}%`+(done?' · 확보 완료':Z.money?` · 광물 +${Z.money}`:''):`구역 ${selStage} 확보 시 개방`;
-  const mp=myPower(),rp=recPower(selStage,hell);
-  $('stPow').innerHTML=`내 전투력 <span class="${mp>=rp?'ok':'bad'}">${fmt(mp)}</span> · 권장 ${fmt(rp)}`;
+  const hpP=Math.round((Z.hpMul*(hell?1.8:1)-1)*100);
+  $('stInfo').innerHTML=open?`<i>웨이브 ${Z.waves}</i><i class="hp">적 체력 ${(hpP>=0?'+':'')+hpP}%</i>`+(done?'<i class="ok">확보 완료</i>':Z.money?`<i>시작 광물 +${Z.money}</i>`:''):`<i>구역 ${selStage} 확보 시 개방</i>`;
+  const mp=myPower(),rp=recPower(selStage,hell),ok=mp>=rp;
+  $('stPow').className='kpow'+(ok?' ok':'');
+  $('stPow').innerHTML=`<span class="t"><span>전투력 <b class="${ok?'ok':'bad'}">${fmt(mp)}</b></span><span>권장 <b>${fmt(rp)}</b></span></span><span class="bar"><u style="width:${Math.min(100,Math.round(mp/rp*100))}%"></u></span>`;
   $('stBoss').style.backgroundImage=`url(${IMG_SRC[boss]})`;
   const c=$('stCard');c.classList.toggle('hell',hell);c.classList.toggle('locked',!open);
   c.style.setProperty('--stbg',IMG_SRC.ground?`url(${IMG_SRC.ground})`:'');
   $('stPrev').disabled=selStage<=0;$('stNext').disabled=selStage>=STAGES.length-1;
   $('kGo').classList.toggle('off',!open);
-  $('goNote').innerHTML=open?ai('bolt')+enCost()+' · '+(hell?'적 체력 ×1.8 · 보상 ×2':(done?`확보 완료 · 다시 하면 무한 모드`:`${zoneSq(selStage)}부대 격파 시 코인 ${fmt(Z.gem)} · 코어 ${Z.core}`)):'아직 잠긴 구역이에요';
+  $('goNote').innerHTML=!open?'아직 잠긴 구역이에요':hell?'지옥 · 보상 ×2':done?'다시 하면 <b>무한 모드</b> · 버틸수록 보상':`${zoneSq(selStage)}부대 격파 보상 ${ai('cry2')}<b>${fmt(Z.gem)}</b> ${ai('core1')}<b>${Z.core}</b>`;
+  $('goCost').innerHTML=ai('bolt')+enCost();
   $('bestTxt').textContent=best.wave>0?`최고 웨이브 ${best.wave} · ${fmt(best.kills)}기 처치`:'인류 최후의 방어선을 지켜라';
 }
 function renderZonePick(B){let h='<div class="kzp">';
@@ -3482,7 +3509,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=76,WEB_NAME='1.20.1';
+const WEB_BUILD=77,WEB_NAME='1.20.2';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
