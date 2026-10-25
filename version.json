@@ -1,6 +1,6 @@
 {
- "version": 79,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f6e16024-2506-4bb3-b93f-3d2a7bf8656d.zip",
- "sha256": "fc8b3182165ea7a5ff28695897aa6e9386ea80db53bba8f94a04dde57c3a3a20",
- "note": "v1.21.0: 구역 확보하면 승리로 끝남(무한 모드 끔), 구역 카드에 행성 지도, 정보 간단하게"
+ "version": 80,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/358c3ca7-23f9-4a82-a18d-838dda5b20c0.zip",
+ "sha256": "258f3338dd41d25925133f045408d27bb76740493f2c6edd225da6af9324b878",
+ "note": "v1.21.1: 전투 화면에 로비 메뉴가 같이 뜨던 문제 수정"
 }

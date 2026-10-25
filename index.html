@@ -453,7 +453,8 @@ button.kcur:active{transform:translateY(.12em)}
 .kt.main.on{filter:drop-shadow(0 0 6px rgba(255,220,120,.8))}
 .kt:active{transform:scale(.94)}
 /* v1.20.3 하단 탭: 평소엔 작게, 누른 탭만 커지게 */
-#lnav{display:flex!important;align-items:flex-end}
+#lnav:not([hidden]){display:flex!important;align-items:flex-end}
+#lnav[hidden]{display:none!important}
 #lnav .kt{flex:1 1 0;min-width:0;height:62px;transition:flex-grow .3s cubic-bezier(.3,1.4,.5,1),height .25s,filter .2s;filter:saturate(.7) brightness(.82)}
 #lnav .kt img,#lnav .kt .ai{width:32px;height:32px;margin-bottom:2px;transition:transform .32s cubic-bezier(.3,1.7,.5,1)}
 #lnav .kt span{font-size:0;opacity:0;transition:opacity .2s,font-size .2s}
@@ -3547,7 +3548,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=79,WEB_NAME='1.21.0';
+const WEB_BUILD=80,WEB_NAME='1.21.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
