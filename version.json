@@ -1,6 +1,6 @@
 {
- "version": 78,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/80352798-7962-4879-8985-e04d95478076.zip",
- "sha256": "b85a999e666d17f3f9fb31e156f232ca678c712ae196e08f83f2b8039ed03137",
- "note": "v1.20.3: 하단 메뉴 아이콘 평소엔 작게, 누른 탭만 커지게"
+ "version": 79,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f6e16024-2506-4bb3-b93f-3d2a7bf8656d.zip",
+ "sha256": "fc8b3182165ea7a5ff28695897aa6e9386ea80db53bba8f94a04dde57c3a3a20",
+ "note": "v1.21.0: 구역 확보하면 승리로 끝남(무한 모드 끔), 구역 카드에 행성 지도, 정보 간단하게"
 }
