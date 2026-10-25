@@ -3479,7 +3479,7 @@ document.querySelectorAll('img[data-ic]').forEach(i=>{i.src=UI_ICONS[i.dataset.i
 $('btnStart').addEventListener('click',()=>{auInit();if(!stageOpen(selStage)){sfx.nope();gainFx('lock','아직 잠긴 구역이에요');return}tickEnergy();const ec=enCost();if(META.en<ec){sfx.nope();gainFx('bolt','에너지가 부족해요');openEnergy();return}closePop();openDocPick()});
 setTab('home');
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&state==='play'&&G&&!G.over)pause()});
-function startGame(){auInit();newRun();state='play';closeMenu();closeUpg();toast(isDoc('hq')?'사령부 요새 · 병사는 성벽에서 싸웁니다':isDoc('armor')?'기갑 사단 · 탱크가 주력입니다':'빈 자리를 눌러 벙커를 지으세요',AMBER);last=performance.now()}
+function startGame(){auInit();newRun();state='play';closeMenu();closeUpg();toast(isDoc('hq')?'사령부 요새 · 병사는 성벽에서 싸웁니다':isDoc('armor')?'기갑 사단 · 탱크가 주력입니다':nBunkers()<runBunkers()?'빈 자리를 눌러 벙커를 지으세요':'아래에서 병사를 뽑아 벙커를 채우세요',AMBER);last=performance.now()}
 /* ===== 설정 (톱니바퀴) ===== */
 const SPK_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
 const NOTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
@@ -3548,7 +3548,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=80,WEB_NAME='1.21.1';
+const WEB_BUILD=81,WEB_NAME='1.21.2';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}

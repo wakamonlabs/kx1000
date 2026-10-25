@@ -1,6 +1,6 @@
 {
- "version": 80,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/358c3ca7-23f9-4a82-a18d-838dda5b20c0.zip",
- "sha256": "258f3338dd41d25925133f045408d27bb76740493f2c6edd225da6af9324b878",
- "note": "v1.21.1: 전투 화면에 로비 메뉴가 같이 뜨던 문제 수정"
+ "version": 81,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/52dfa4fa-bf3f-4f76-8dbd-6ab273f6f480.zip",
+ "sha256": "ff88a143a9288d021e7580865f192dd9d0c635a4bcc9ce983ba07fabda62e68c",
+ "note": "v1.21.2: 폴드 전투 화면 꽉 차게(하단 메뉴 겹침 수정 포함), 시작 안내 문구"
 }
