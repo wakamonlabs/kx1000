@@ -1,6 +1,6 @@
 {
- "version": 73,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/bef7edce-e72f-4bcb-9bb4-68916febb9d0.zip",
- "sha256": "94e8fb82c6cf17ac7e79730ba89be6d3ddd5f20e0227dd6a0a83bff7076217f7",
- "note": "v1.19.1: 적 모션 24프레임으로 부드럽게, 성능 표시(테스트)"
+ "version": 74,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/a0dce93b-9708-4b5f-bb4b-6ecc8eeba292.zip",
+ "sha256": "e51b29cdb7c19c1346f8f9a42fe088e955f3410368414bc51bc1fdbf3a3467a7",
+ "note": "v1.19.2: 폴드 등 넓은 화면 로비 맞춤, 스플래시 재생 버튼 깜빡임 수정, 로딩 화면 크기"
 }
