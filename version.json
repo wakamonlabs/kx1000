@@ -1,6 +1,6 @@
 {
- "version": 75,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/14c1d3e4-1af3-48f1-bdb8-77ecf88c20cc.zip",
- "sha256": "f0ec7fee82582be585e9d35027a04ad246ed9aa20b6333a82e8499808e9ff067",
- "note": "v1.20.0: 작전 교리(사령부 요새·기갑 사단·보급 우선), 벙커 체력 표시, 적 크기 흔들림 수정, 스플래시 크기"
+ "version": 76,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/570bf1c4-205d-46d6-b33d-4fa60bf23ad0.zip",
+ "sha256": "380795624e7581d9f96196fa876a8c76c00b98f0a7ac25b66601bfeee18cbfb6",
+ "note": "v1.20.1: 출격 때 작전 교리 3개 중 선택(12종), 설명 간단하게"
 }
