@@ -1,6 +1,6 @@
 {
- "version": 99,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/d84e42e5-b0ab-48da-8bae-d5835ad87b1f.zip",
- "sha256": "a9c6eb114c69105a36b5b59daaff9fb52dd7e3f49e47fc9ec450af09b2793b52",
- "note": "v1.28.2: 전투력·권장 전투력을 실제 강함 기준으로 다시 계산"
+ "version": 100,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/4cfb2508-ea70-44c3-bdbf-0861a62694d6.zip",
+ "sha256": "d538e7f2daf17b15844de6a6ac8b64d72d1205c74d7821d7daf6a362a2dbcb8e",
+ "note": "v1.29.0: 지휘관 모집·스킬, 30일 보급, 광고 재건·보상 2배·소탕, 돌파 지원 패키지"
 }
