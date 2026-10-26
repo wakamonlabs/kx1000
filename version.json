@@ -1,6 +1,6 @@
 {
- "version": 93,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/8b485a7f-b7cd-46e3-87ea-342e348ac1c3.zip",
- "sha256": "7a9fdfcdd85be6d8878d0a8f35d9ace49a100ab52093f2556d924b5371d61e91",
- "note": "v1.25.1: 버튼 디자인 정리, 벙커 창문에서 사격 불꽃"
+ "version": 94,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/763385fc-8846-4ca3-872c-eceb6364fdc8.zip",
+ "sha256": "02d57c2b183ed501e9af326f52000e26aeb6fe5a6ecd869b88a13ea1276fb248",
+ "note": "v1.26.0: 벙커 포탑(장착·강화 3단계), 재화창 한 줄로"
 }
