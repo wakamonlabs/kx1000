@@ -1,6 +1,6 @@
 {
- "version": 97,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fc199270-419b-4429-b5d4-7128e48ca74d.zip",
- "sha256": "bf79f2fa4edb20e0cd70c96cbfd2374897caba95be6d0659f805a8f11dbdf05e",
- "note": "v1.28.0: 새 원거리 적 19종 추가(세 종족)"
+ "version": 98,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/af2a9a1f-8cef-4cda-bc82-8b49149fc4ed.zip",
+ "sha256": "8cdf5acade60e72d43988fd70b6ce373b33850c526c79d4bb2a60df042f96df8",
+ "note": "v1.28.1: 새 적 15종 위에서 본 정방향으로 다시 그림, 용암 지대 번개 같은 선·네모 그림자 자국 수정"
 }
