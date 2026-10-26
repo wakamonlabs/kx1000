@@ -1,6 +1,6 @@
 {
- "version": 85,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/8d94625c-1533-42d6-89d9-8a68840c57c6.zip",
- "sha256": "0f8de99dfe6f44f98888ea3140970cc82d9e72e9172cca13a3b0e7ead0717ef1",
- "note": "v1.23.0: 로비 새 디자인(빨강), 전투 화면 두 손가락 확대, 로비 확대 막음"
+ "version": 86,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/c0eb4be7-0c7a-42dd-906a-56d0b25bd30c.zip",
+ "sha256": "4901785ae1c274a3b4a9bcd5909d22dbf2b4de10f9daa8b7c41cfe5be28825f1",
+ "note": "v1.24.0: 상점·연구소·기지·사령부·팝업·전투 화면도 빨강 디자인으로"
 }
