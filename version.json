@@ -1,6 +1,6 @@
 {
- "version": 106,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/25bb9f37-b1f9-4c3d-977d-04e0b328ce1e.zip",
- "sha256": "6587abff628c0de1c734a561d7c50bd4a53b664f537efa5f004c23442003637d",
- "note": "v1.31.0: 긴급 재건 강화(적 전멸·벙커 복구·전부 수리), 안 죽는 적 버그 수정"
+ "version": 107,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fa66f96b-a3c3-49cb-996a-06649ff868a4.zip",
+ "sha256": "06c36dc048c9cb6cd5968949a4ad9d3eddeaa8132d1d8048cdd12b954a693852",
+ "note": "v1.31.1: 전투 상단 HUD 겹침 정리, 일시정지 사각 버튼, 화면 위 여백 설정"
 }
