@@ -1,6 +1,6 @@
 {
- "version": 84,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/0dc5d92a-d300-4838-946b-4d0f977b6f06.zip",
- "sha256": "a34a3b71c7e396ad7b544d0020823a950f3f277cf85fc0820e1091a8a4ae39be",
- "note": "v1.22.2: 시작 로딩 빨라짐, 메모리 사용 줄임"
+ "version": 85,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/8d94625c-1533-42d6-89d9-8a68840c57c6.zip",
+ "sha256": "0f8de99dfe6f44f98888ea3140970cc82d9e72e9172cca13a3b0e7ead0717ef1",
+ "note": "v1.23.0: 로비 새 디자인(빨강), 전투 화면 두 손가락 확대, 로비 확대 막음"
 }

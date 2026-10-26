@@ -107,6 +107,14 @@ final class GameViewController: UIViewController, WKScriptMessageHandler, WKNavi
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? { nil }
 
+    // 웹뷰 자체 확대(두 손가락·두 번 탭)는 끔. 확대는 게임 전투 화면 안에서만.
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.scrollView.pinchGestureRecognizer?.isEnabled = false
+        webView.scrollView.minimumZoomScale = 1
+        webView.scrollView.maximumZoomScale = 1
+        webView.scrollView.setZoomScale(1, animated: false)
+    }
+
     private func loadGame() {
         if installedBuild > bundledBuild, FileManager.default.fileExists(atPath: gameFile.path) {
             web.loadFileURL(gameFile, allowingReadAccessTo: gameDir)
