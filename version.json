@@ -1,6 +1,6 @@
 {
- "version": 83,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/80c6bf0d-3368-4a10-955e-f2145cf9ba00.zip",
- "sha256": "3b3f1b27a22c5ee222fef790f29cb6b745b389e4cced5b87053859851c504d2a",
- "note": "v1.22.1: 일부 아이폰에서 적이 안 보이던 문제 수정(그림 메모리 절약)"
+ "version": 84,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/0dc5d92a-d300-4838-946b-4d0f977b6f06.zip",
+ "sha256": "a34a3b71c7e396ad7b544d0020823a950f3f277cf85fc0820e1091a8a4ae39be",
+ "note": "v1.22.2: 시작 로딩 빨라짐, 메모리 사용 줄임"
 }
