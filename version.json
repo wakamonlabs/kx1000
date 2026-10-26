@@ -1,6 +1,6 @@
 {
- "version": 82,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/d356b643-e76c-4eb4-9700-ee84a1867352.zip",
- "sha256": "89c15b9a07b0c83071c14a5bdfa12e64ee76b3f734bc8d7629d2bbc1be7049a1",
- "note": "v1.22.0: 적 그리기를 WebGL로(한 번에 묶어 그림), 설정에서 켜기/끄기"
+ "version": 83,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/80c6bf0d-3368-4a10-955e-f2145cf9ba00.zip",
+ "sha256": "3b3f1b27a22c5ee222fef790f29cb6b745b389e4cced5b87053859851c504d2a",
+ "note": "v1.22.1: 일부 아이폰에서 적이 안 보이던 문제 수정(그림 메모리 절약)"
 }
