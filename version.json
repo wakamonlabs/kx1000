@@ -1,6 +1,6 @@
 {
- "version": 101,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/be2f13b7-657c-4f5a-9847-f6a9b9413533.zip",
- "sha256": "5b3ce8cbb7daea58d3cb7290e06d03ab763690635758a21d68bcde62fd61a492",
- "note": "v1.29.1: 하단 탭 선택 시 반만 빨갛던 그림 수정"
+ "version": 102,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/c4a83b25-e0f4-49dc-adb2-a6a60f742777.zip",
+ "sha256": "8da16dc7ecef47cf31a3a145ef7c093973b5d8d385545e6cb529255157872542",
+ "note": "v1.30.0: 지휘관이 벙커에 들어가 직접 공격, 미니건·포병 지휘관 추가"
 }
