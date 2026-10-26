@@ -1,6 +1,6 @@
 {
- "version": 92,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/be547bff-c25c-4e32-bd99-ff667ff21c2d.zip",
- "sha256": "e5a3a39a82187251c34066e412d945924029b65eb430831c841c5d62c3164548",
- "note": "v1.25.0: 전투 상단 표시·버튼 크게, 구역마다 풍경 그림"
+ "version": 93,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/8b485a7f-b7cd-46e3-87ea-342e348ac1c3.zip",
+ "sha256": "7a9fdfcdd85be6d8878d0a8f35d9ace49a100ab52093f2556d924b5371d61e91",
+ "note": "v1.25.1: 버튼 디자인 정리, 벙커 창문에서 사격 불꽃"
 }
