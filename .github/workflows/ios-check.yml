@@ -1,0 +1,27 @@
+name: iOS build check
+
+# 서명 없이 시뮬레이터용으로 컴파일만 해 봅니다 (ios/ 폴더가 바뀌면 자동 실행).
+on:
+  workflow_dispatch:
+  push:
+    paths: ["ios/**", ".github/workflows/ios-check.yml"]
+
+jobs:
+  check:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -version
+      - run: brew install xcodegen
+      - name: Generate
+        run: |
+          cp index.html ios/Resources/index.html
+          cd ios && xcodegen generate
+      - name: Build (simulator, no signing)
+        working-directory: ios
+        run: |
+          xcodebuild -project KX1000.xcodeproj -scheme KX1000 -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO KX_BUNDLED_BUILD=0 build | tail -40
+          test ${PIPESTATUS[0]} -eq 0
