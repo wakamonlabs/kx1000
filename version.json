@@ -1,6 +1,6 @@
 {
- "version": 98,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/af2a9a1f-8cef-4cda-bc82-8b49149fc4ed.zip",
- "sha256": "8cdf5acade60e72d43988fd70b6ce373b33850c526c79d4bb2a60df042f96df8",
- "note": "v1.28.1: 새 적 15종 위에서 본 정방향으로 다시 그림, 용암 지대 번개 같은 선·네모 그림자 자국 수정"
+ "version": 99,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/d84e42e5-b0ab-48da-8bae-d5835ad87b1f.zip",
+ "sha256": "a9c6eb114c69105a36b5b59daaff9fb52dd7e3f49e47fc9ec450af09b2793b52",
+ "note": "v1.28.2: 전투력·권장 전투력을 실제 강함 기준으로 다시 계산"
 }
