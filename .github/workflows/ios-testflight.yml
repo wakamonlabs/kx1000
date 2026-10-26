@@ -9,6 +9,9 @@ on:
   workflow_dispatch:
   push:
     tags: ["ios-*"]
+    # ios/release.txt 내용을 바꿔서 올려도 실행됨 (태그를 못 올리는 환경용)
+    branches: [main]
+    paths: ["ios/release.txt"]
 
 jobs:
   testflight:
