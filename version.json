@@ -1,6 +1,6 @@
 {
- "version": 81,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/52dfa4fa-bf3f-4f76-8dbd-6ab273f6f480.zip",
- "sha256": "ff88a143a9288d021e7580865f192dd9d0c635a4bcc9ce983ba07fabda62e68c",
- "note": "v1.21.2: 폴드 전투 화면 꽉 차게(하단 메뉴 겹침 수정 포함), 시작 안내 문구"
+ "version": 82,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/d356b643-e76c-4eb4-9700-ee84a1867352.zip",
+ "sha256": "89c15b9a07b0c83071c14a5bdfa12e64ee76b3f734bc8d7629d2bbc1be7049a1",
+ "note": "v1.22.0: 적 그리기를 WebGL로(한 번에 묶어 그림), 설정에서 켜기/끄기"
 }
