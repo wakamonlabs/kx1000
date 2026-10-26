@@ -1,6 +1,6 @@
 {
- "version": 91,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/1d20e632-7c7d-4bc2-8ccd-51914f6db17d.zip",
- "sha256": "ad603429f86ae64048c6fe0f42659ec3ff41fbe3d206fc994223a8fdff1ad4fd",
- "note": "v1.24.5: 설정에 성능 표시 켜기/끄기 스위치"
+ "version": 92,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/be547bff-c25c-4e32-bd99-ff667ff21c2d.zip",
+ "sha256": "e5a3a39a82187251c34066e412d945924029b65eb430831c841c5d62c3164548",
+ "note": "v1.25.0: 전투 상단 표시·버튼 크게, 구역마다 풍경 그림"
 }
