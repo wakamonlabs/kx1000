@@ -1,6 +1,6 @@
 {
- "version": 96,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cd6a4a6e-6c67-4327-b91c-f7b11da61f0e.zip",
- "sha256": "1af4c0ea8183630e64950e99d777be4c9013a29f3dde48b3f96d99a421d07c33",
- "note": "v1.27.1: 쉘백을 네 다리 이동 포탑 디자인으로"
+ "version": 97,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fc199270-419b-4429-b5d4-7128e48ca74d.zip",
+ "sha256": "bf79f2fa4edb20e0cd70c96cbfd2374897caba95be6d0659f805a8f11dbdf05e",
+ "note": "v1.28.0: 새 원거리 적 19종 추가(세 종족)"
 }
