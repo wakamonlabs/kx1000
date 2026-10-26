@@ -3654,6 +3654,8 @@ const RES_IC={slots:'portrait',rifle:'@rifle',sniper:'@sniper',bhp:'@@bunker',ba
 const KIND_NAME={bunker:'벙커',wall:'장벽',tank:'탱크'};const wallCost=()=>Math.round(50*fx('wallCost',1));const KIND_COST={bunker:100,wall:50,tank:420};
 const TANK_X=[52,137,223,308],TANK_Y=520,TANK_SLOTS=12;const tankMax=()=>hq('tank')?Math.min(4,[0,0,1,2,3][hqLv()]+(hq('tank2')?1:0)+(isDoc('armor')?1:0)):0;const nTanks=()=>G?G.structs.filter(s=>s.kind==='tank'&&!s.dead).length:0;const tankCost=()=>Math.round((KIND_COST.tank+160*nTanks())*(isDoc('armor')?.6:1));const troopLoad=()=>G.troops.length+TANK_SLOTS*nTanks();
 function setTab(t){
+  /* 열려 있는 창(패스·미션·도감·설정 등)은 다른 탭으로 가면 닫음 */
+  if(!$('kPop').hidden)closePop();if(!$('ovSet').hidden&&state!=='play'&&state!=='pause')$('ovSet').hidden=true;
   curTab=t;
   for(const b of document.querySelectorAll('#lnav .kt')){const on=b.dataset.tab===t,was=b.classList.contains('on');b.classList.toggle('on',on);if(on&&!was){b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}}
   for(const p of document.querySelectorAll('#ovTitle [data-p]'))p.hidden=p.dataset.p!==t;
@@ -3780,7 +3782,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=88,WEB_NAME='1.24.2';
+const WEB_BUILD=89,WEB_NAME='1.24.3';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}

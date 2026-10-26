@@ -1,6 +1,6 @@
 {
- "version": 88,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/0038a551-87b3-44c2-8c1f-85cae96d9b01.zip",
- "sha256": "2ec4d15269d4a7bff5b2389d68847459aebd44ea96e84c72e5c63dc8115b5105",
- "note": "v1.24.2: 상단 재화바와 화면 제목 겹침 수정"
+ "version": 89,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/ef3ce61a-eb4a-4083-be6a-e25917e047f8.zip",
+ "sha256": "31853cba14f26e3fde5352eb6474df22c1da60749d44b733c55f5f5d4205f3a1",
+ "note": "v1.24.3: 창을 연 채로 하단 탭을 누르면 창이 닫힘"
 }
