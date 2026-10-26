@@ -1,6 +1,6 @@
 {
- "version": 94,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/763385fc-8846-4ca3-872c-eceb6364fdc8.zip",
- "sha256": "02d57c2b183ed501e9af326f52000e26aeb6fe5a6ecd869b88a13ea1276fb248",
- "note": "v1.26.0: 벙커 포탑(장착·강화 3단계), 재화창 한 줄로"
+ "version": 95,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f4138b16-62cf-4692-9df5-88d2ebda8b7c.zip",
+ "sha256": "b9b7a5014ad853632988a00338b892f405e3d65adc17bfceb3b485352f2710ab",
+ "note": "v1.27.0: 원거리 적 위주 배치, 구역 1에 소포이 쉘백 대거 등장"
 }
