@@ -1,6 +1,6 @@
 {
- "version": 108,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fa4b7033-688a-4c44-9998-81e9631668e6.zip",
- "sha256": "934886fcbb6dc5c6aabec0c4ad0d28c44cd78bc818add59b256bab6532174a33",
- "note": "v1.31.2: 지휘관 표시를 들어간 벙커 병사 칸 위에 붙임"
+ "version": 109,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/64134bbc-41bd-49c9-ab40-fec0e812ef7f.zip",
+ "sha256": "9fdf92943c62fc66321da37b30e9aabe8812c04532e1abe406017db05abbaefa",
+ "note": "v1.32.0: 테스트용 지휘관 전부 열림, 지휘관별 공격 모습, 화염방사 지휘관 추가"
 }
