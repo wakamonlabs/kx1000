@@ -1,6 +1,6 @@
 {
- "version": 104,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/21a390de-66dd-499e-a5cb-01ad5e88acac.zip",
- "sha256": "89870a986bd491e0b08ca74fea77c77e238c3519537e59f9cadaefdafd773bf2",
- "note": "v1.30.2: 적이 안 보이던 문제 방지, 전투 준비 로딩, WebGL 스위치, 벙커 메뉴 줄바꿈"
+ "version": 105,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/c1cebd45-500c-44c8-a7b9-10752d713828.zip",
+ "sha256": "01f26458114b1a2b4c34943cbca565694d75739ff4241118f673d43f4f0d2d06",
+ "note": "v1.30.3: 메모리 절반으로(검은 화면·적 안 보임 대비), 준비 시간 단축, 벙커 겹쳐 배치 안 되게"
 }
