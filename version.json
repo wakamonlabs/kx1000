@@ -1,6 +1,6 @@
 {
- "version": 103,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/38f4caaf-dc98-4903-befc-9c58d03227f6.zip",
- "sha256": "6175ba04563918810ba8087e4f2961f6adca12a30530aa9d83483af81079b503",
- "note": "v1.30.1: 벙커 기본 체력 1000, 사거리 표시 더 오래, 모드 버튼 모양 맞춤"
+ "version": 104,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/21a390de-66dd-499e-a5cb-01ad5e88acac.zip",
+ "sha256": "89870a986bd491e0b08ca74fea77c77e238c3519537e59f9cadaefdafd773bf2",
+ "note": "v1.30.2: 적이 안 보이던 문제 방지, 전투 준비 로딩, WebGL 스위치, 벙커 메뉴 줄바꿈"
 }
