@@ -1,6 +1,6 @@
 {
- "version": 90,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/7d6e7e62-3a52-497b-8741-698f815e9f64.zip",
- "sha256": "a8cfc0c212be22a0b244e362e7daf2686b283b1ea52cef3f37451df0f02a364a",
- "note": "v1.24.4: 패스 받은 보상은 어둡게 + 받음 표시"
+ "version": 91,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/1d20e632-7c7d-4bc2-8ccd-51914f6db17d.zip",
+ "sha256": "ad603429f86ae64048c6fe0f42659ec3ff41fbe3d206fc994223a8fdff1ad4fd",
+ "note": "v1.24.5: 설정에 성능 표시 켜기/끄기 스위치"
 }
