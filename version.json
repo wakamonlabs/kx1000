@@ -1,6 +1,6 @@
 {
- "version": 95,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/f4138b16-62cf-4692-9df5-88d2ebda8b7c.zip",
- "sha256": "b9b7a5014ad853632988a00338b892f405e3d65adc17bfceb3b485352f2710ab",
- "note": "v1.27.0: 원거리 적 위주 배치, 구역 1에 소포이 쉘백 대거 등장"
+ "version": 96,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/cd6a4a6e-6c67-4327-b91c-f7b11da61f0e.zip",
+ "sha256": "1af4c0ea8183630e64950e99d777be4c9013a29f3dde48b3f96d99a421d07c33",
+ "note": "v1.27.1: 쉘백을 네 다리 이동 포탑 디자인으로"
 }
