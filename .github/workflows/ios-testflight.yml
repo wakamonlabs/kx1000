@@ -2,10 +2,9 @@ name: iOS TestFlight
 
 # 저장소 Actions 탭에서 "Run workflow"를 누르면 아이폰 앱을 빌드해 TestFlight에 올립니다.
 # 필요한 저장소 Secrets (Settings → Secrets and variables → Actions):
-#   APPLE_TEAM_ID   : 애플 개발자 팀 ID (10자리)
-#   ASC_KEY_ID      : App Store Connect API 키 ID
-#   ASC_ISSUER_ID   : App Store Connect 발급자(Issuer) ID
+#   ASC_KEY_ID      : App Store Connect API 키 ID (예: 6KD6WY3L7U)
 #   ASC_KEY_P8      : API 키 파일(AuthKey_XXXX.p8) 내용 전체
+#   (선택) APPLE_TEAM_ID / ASC_ISSUER_ID : 없으면 아래 기본값 사용
 on:
   workflow_dispatch:
   push:
@@ -16,9 +15,10 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 45
     env:
-      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      # 팀 ID·Issuer ID는 비밀값이 아니라서 기본값을 여기 적어 둡니다 (Secrets가 있으면 그쪽이 우선).
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID || '4CPCVRQ9S6' }}
       ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID || '4033414f-5663-4ab7-b529-319b71f41e87' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +27,7 @@ jobs:
           for v in TEAM_ID ASC_KEY_ID ASC_ISSUER_ID; do
             if [ -z "${!v}" ]; then echo "::error::Secret for $v is missing"; exit 1; fi
           done
+          if [ "${{ secrets.ASC_KEY_P8 != '' }}" != "true" ]; then echo "::error::Secret ASC_KEY_P8 is missing"; exit 1; fi
 
       - name: Xcode version
         run: xcodebuild -version
