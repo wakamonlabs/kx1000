@@ -1,1 +1,1 @@
-TestFlight 요청: game build 82 / 1.22.0 (2026-10-26T01:25:44Z)
+TestFlight 요청: game build 82 / 1.22.0 (2026-10-26T01:27:50Z) - unsigned archive + cloud signing

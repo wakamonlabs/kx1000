@@ -59,26 +59,27 @@ jobs:
         working-directory: ios
         run: xcodegen generate
 
-      - name: Archive
+      - name: Archive (unsigned)
         working-directory: ios
+        # 기기 등록 없이 하기 위해 아카이브는 서명 없이 만들고,
+        # 다음 단계(내보내기)에서 API 키로 애플 클라우드 배포 서명을 받습니다.
         run: |
+          set -o pipefail
           xcodebuild -project KX1000.xcodeproj -scheme KX1000 -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath "$RUNNER_TEMP/KX1000.xcarchive" archive \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$KEY_PATH" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             DEVELOPMENT_TEAM="$TEAM_ID" \
-            CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
             MARKETING_VERSION="$WEB_NAME" \
             CURRENT_PROJECT_VERSION="${{ github.run_number }}" \
-            KX_BUNDLED_BUILD="$WEB_BUILD"
+            KX_BUNDLED_BUILD="$WEB_BUILD" 2>&1 | tee "$RUNNER_TEMP/archive.log" | tail -30 \
+          || { grep -E "error:|rror " "$RUNNER_TEMP/archive.log" | head -15 | sed 's/^/::error::/'; exit 1; }
 
       - name: Export and upload to TestFlight
         working-directory: ios
         run: |
           sed "s/TEAM_ID_PLACEHOLDER/$TEAM_ID/" ExportOptions.plist > "$RUNNER_TEMP/ExportOptions.plist"
+          set -o pipefail
           xcodebuild -exportArchive \
             -archivePath "$RUNNER_TEMP/KX1000.xcarchive" \
             -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
@@ -86,5 +87,6 @@ jobs:
             -allowProvisioningUpdates \
             -authenticationKeyPath "$KEY_PATH" \
             -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID"
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" 2>&1 | tee "$RUNNER_TEMP/export.log" | tail -40 \
+          || { grep -iE "error|fail" "$RUNNER_TEMP/export.log" | head -15 | sed 's/^/::error::/'; exit 1; }
           echo "Uploaded. It appears in App Store Connect → TestFlight after processing (about 5-15 min)."
