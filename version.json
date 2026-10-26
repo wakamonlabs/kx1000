@@ -1,6 +1,6 @@
 {
- "version": 100,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/4cfb2508-ea70-44c3-bdbf-0861a62694d6.zip",
- "sha256": "d538e7f2daf17b15844de6a6ac8b64d72d1205c74d7821d7daf6a362a2dbcb8e",
- "note": "v1.29.0: 지휘관 모집·스킬, 30일 보급, 광고 재건·보상 2배·소탕, 돌파 지원 패키지"
+ "version": 101,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/be2f13b7-657c-4f5a-9847-f6a9b9413533.zip",
+ "sha256": "5b3ce8cbb7daea58d3cb7290e06d03ab763690635758a21d68bcde62fd61a492",
+ "note": "v1.29.1: 하단 탭 선택 시 반만 빨갛던 그림 수정"
 }
