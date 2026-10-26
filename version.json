@@ -1,6 +1,6 @@
 {
- "version": 89,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/ef3ce61a-eb4a-4083-be6a-e25917e047f8.zip",
- "sha256": "31853cba14f26e3fde5352eb6474df22c1da60749d44b733c55f5f5d4205f3a1",
- "note": "v1.24.3: 창을 연 채로 하단 탭을 누르면 창이 닫힘"
+ "version": 90,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/7d6e7e62-3a52-497b-8741-698f815e9f64.zip",
+ "sha256": "a8cfc0c212be22a0b244e362e7daf2686b283b1ea52cef3f37451df0f02a364a",
+ "note": "v1.24.4: 패스 받은 보상은 어둡게 + 받음 표시"
 }
