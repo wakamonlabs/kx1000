@@ -1,6 +1,6 @@
 {
- "version": 107,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fa66f96b-a3c3-49cb-996a-06649ff868a4.zip",
- "sha256": "06c36dc048c9cb6cd5968949a4ad9d3eddeaa8132d1d8048cdd12b954a693852",
- "note": "v1.31.1: 전투 상단 HUD 겹침 정리, 일시정지 사각 버튼, 화면 위 여백 설정"
+ "version": 108,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/fa4b7033-688a-4c44-9998-81e9631668e6.zip",
+ "sha256": "934886fcbb6dc5c6aabec0c4ad0d28c44cd78bc818add59b256bab6532174a33",
+ "note": "v1.31.2: 지휘관 표시를 들어간 벙커 병사 칸 위에 붙임"
 }
