@@ -953,13 +953,15 @@ h2.big{color:var(--kfg);text-shadow:-.05em -.05em 0 var(--kk),.05em -.05em 0 var
 .kpane{background:linear-gradient(rgba(17,18,20,.92),rgba(12,12,14,.95))!important;border-color:transparent!important;border-image:var(--r-panel) 30 fill / 1.05em / 0 stretch!important;border-radius:0!important;box-shadow:0 .3em .9em rgba(0,0,0,.65)!important}
 .kpane::before{left:1.1em!important;right:1.1em!important;top:.5em!important;height:.35em!important}
 .kph{padding-top:1.05em!important}
+/* 상단 재화바 아래에서 시작(노치·상태바 높이 포함) */
+.kpane{top:calc(env(safe-area-inset-top,0px) + 3.6em)!important}
+#ovTitle>.kpop{padding-top:calc(env(safe-area-inset-top,0px) + 3.6em)!important}
 /* 버튼 */
 .kb{background:none!important;border-color:transparent!important;border-image:var(--r-set) 22 fill / .6em / 0 stretch!important;box-shadow:none!important;border-radius:0!important;color:#f1e4cb!important}
-.kb.gold,.promo button:not(.off){background:none!important;border:.14em solid transparent!important;border-image:var(--r-b_mode_defense_n) 26 30 fill / .55em .7em / 0 stretch!important;box-shadow:none!important;border-radius:0!important;color:#fff4e8!important;text-shadow:0 .08em 0 #4a0000!important}
-.kb.gold:active,.promo button:not(.off):active{border-image-source:var(--r-b_mode_defense_p)!important}
+.kb.gold,.kb.teal:not(.off),.promo button:not(.off){background:none!important;border:.14em solid transparent!important;border-image:var(--r-b_mode_defense_n) 26 30 fill / .55em .7em / 0 stretch!important;box-shadow:none!important;border-radius:0!important;color:#fff4e8!important;text-shadow:0 .08em 0 #4a0000!important}
+.kb.gold:active,.kb.teal:not(.off):active,.promo button:not(.off):active{border-image-source:var(--r-b_mode_defense_p)!important}
 .kb.off,.kb.dark,.promo button.off{background:none!important;border:.14em solid transparent!important;border-image:var(--r-b_mode_hell_n) 26 30 fill / .55em .7em / 0 stretch!important;color:#97979a!important;box-shadow:none!important;border-radius:0!important;text-shadow:0 .08em 0 #000!important}
-.kb.teal,.kb.pink{border-image:none!important;border:.14em solid #0b0b0c!important;border-radius:.5em!important}
-.kb.teal{background:linear-gradient(#4fe6ff,#1aa7d6)!important;color:#0b0b0c!important}
+.kb.pink{border-image:none!important;border:.14em solid #0b0b0c!important;border-radius:.5em!important}
 .kb.pink{background:linear-gradient(#ff8fe0,#d93fae)!important}
 </style>
 
@@ -3778,7 +3780,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=87,WEB_NAME='1.24.1';
+const WEB_BUILD=88,WEB_NAME='1.24.2';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
