@@ -1,6 +1,1 @@
-{
- "version": 111,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/e5ab988e-09c6-4564-bbd1-5565b93daff7.zip",
- "sha256": "6a997878626c14c59d73b4dbc0323a2d7591b51c935d4d3a7066015ed683567f",
- "note": "v1.32.2: 아이폰에서 앱이 뒤로 갔다 오면 벙커·병사·적이 사라지던 것 자동 복구, 모선 핵 바닥 번개 무늬 정리"
-}
+{"version":112,"zip":"https://cdn.creativeclaw.co/u/e9af58be/zips/e0c70abb-c211-476e-a6fe-d6d5022068fc.zip","sha256":"e7299f8ad8edf2095ea823b479c58f0282aaff891243c8789669086b7bec85f6","note":"1.33.0 폴드 화면 꽉 채우기 · 적 체력↑ 공격력↓ 밸런스"}
