@@ -1,6 +1,6 @@
 {
- "version": 109,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/64134bbc-41bd-49c9-ab40-fec0e812ef7f.zip",
- "sha256": "9fdf92943c62fc66321da37b30e9aabe8812c04532e1abe406017db05abbaefa",
- "note": "v1.32.0: 테스트용 지휘관 전부 열림, 지휘관별 공격 모습, 화염방사 지휘관 추가"
+ "version": 110,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/9b68a89e-dd77-44d7-b090-1a44bd2a31b0.zip",
+ "sha256": "a0234dfc2e87369f854a075aa6d38df830724650e1438048380d9637a99f0bbc",
+ "note": "v1.32.1: 설정 창 위가 잘리던 것 수정"
 }
