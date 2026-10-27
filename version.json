@@ -1,6 +1,6 @@
 {
- "version": 110,
- "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/9b68a89e-dd77-44d7-b090-1a44bd2a31b0.zip",
- "sha256": "a0234dfc2e87369f854a075aa6d38df830724650e1438048380d9637a99f0bbc",
- "note": "v1.32.1: 설정 창 위가 잘리던 것 수정"
+ "version": 111,
+ "zip": "https://cdn.creativeclaw.co/u/e9af58be/zips/e5ab988e-09c6-4564-bbd1-5565b93daff7.zip",
+ "sha256": "6a997878626c14c59d73b4dbc0323a2d7591b51c935d4d3a7066015ed683567f",
+ "note": "v1.32.2: 아이폰에서 앱이 뒤로 갔다 오면 벙커·병사·적이 사라지던 것 자동 복구, 모선 핵 바닥 번개 무늬 정리"
 }
