@@ -4418,7 +4418,7 @@ function refreshLobby(){try{syncDoc()}catch(e){}
   $('coreAmt').textContent=fmt(META.cores);$('gemAmt').textContent=fmt(META.gems|0);for(const id of['coreAmt','gemAmt']){const el=$(id);el.style.fontSize=el.textContent.length>5?'.78em':''}syncEnergy();
   $('btnMission').classList.toggle('dot',missionDot());$('btnHero').classList.toggle('dot',gachaFree());{const hi=$('heroIco');if(hi&&META.hero)hi.style.backgroundImage=`url(${HERO_SRC[META.hero]})`}$('btnPass').classList.toggle('dot',passReady());
   $('btnDaily').classList.toggle('dot',freeOk('gem')||freeOk('core'));$('btnDex').classList.toggle('dot',DEX.some(dexReady));
-  $('btnBaseR').classList.toggle('dot',pathCan());{const ti=$('tabHeroIco');if(ti&&META.hero&&HERO_SRC[META.hero]){ti.style.backgroundImage=`url(${HERO_SRC[META.hero]})`;ti.classList.add('hp')}}
+  $('btnBaseR').classList.toggle('dot',pathCan());
   const nb=document.querySelector('#lnav .kt[data-tab="base"]');if(nb)nb.classList.toggle('dot',false);
   const nh=document.querySelector('#lnav .kt[data-tab="hq"]');if(nh)nh.classList.toggle('dot',gachaFree());
   const ns=document.querySelector('#lnav .kt[data-tab="shop"]');if(ns)ns.classList.toggle('dot',freeOk('gem')||freeOk('core')||offerOn());
@@ -4528,7 +4528,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=123,WEB_NAME='1.36.0';
+const WEB_BUILD=124,WEB_NAME='1.36.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
