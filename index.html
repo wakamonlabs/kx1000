@@ -2604,7 +2604,7 @@ function build(kind,row,col,free){
   if(!free&&kind==='bunker'&&META.daily)META.daily.builds++;
   if(!free){s.building=true;s.bp=0;s.hp=m*.15;s.bt=kind==='bunker'?44:kind==='tank'?18:9;s.builder=null;assignBuilder(s)}
   if(kind==='tank'){s.turA=-Math.PI/2;s.cd=1;s.fireT=-9}
-  G.slots[row][col]=s;G.structs.push(s);
+  G.slots[row][col]=s;if(kind==='bunker'&&(META.turLv|0)>0)s.tur={lv:Math.min(3,META.turLv|0),cd:.3,a:null};G.structs.push(s);
   if(!free){sfx.build();toast(s.builder?KIND_NAME[kind]+' 건설 시작 · 드론 배정':'수리 드론이 없어 천천히 지어집니다',s.builder?AMBER:DIM);for(let i=0;i<10;i++)addP(SMOKE,x+rand(-26,26),y+rand(-14,14),rand(-20,20),rand(-20,5),rand(.5,.9),rand(6,11),'#6d6152');shake(.08)}
   return true;
 }
@@ -3777,7 +3777,6 @@ function openMenu(row,col){
     add(`건설 중 ${Math.floor(s.bp*100)}%`,null,()=>{},true);
     add('건설 취소','+'+s.cost,()=>{G.money+=s.cost;removeStruct(s);sfx.click();closeMenu()});
   }else{
-    if(s.kind==='bunker'){const lv=s.tur?s.tur.lv:0;if(lv<3){const tc=TUR.cost[lv];add(lv?`포탑 강화 → ${TUR.name[lv]}`:`포탑 장착 · ${TUR.name[0]}`,tc,()=>{if(G.money<tc)return;G.money-=tc;s.tur=s.tur||{lv:0,cd:.3,a:null};s.tur.lv++;s.turSpent=(s.turSpent||0)+tc;sfx.build();for(let i=0;i<8;i++)addP(SPARK,s.x+rand(-10,10),turPos(s).y,rand(-60,60),rand(-60,60),.25,1.2,'#ffd27a');openMenu(row,col)},G.money<tc)}else add(`${TUR.name[2]} (최대)`,null,()=>{},true)}
     if(s.kind==='bunker'){for(const ty of ['rifle','sniper']){const n=s.troops.filter(t=>t.type===ty).length;if(n)add(`${T[ty].name} 내보내기`,`${n}명`,()=>{ejectTroop(s,ty);openMenu(row,col)})}}
     if(s.kind==='bunker'&&G.hu&&G.hero&&G.hu.b!==s)add(HERO_BY[G.hero.id].name+' 이 벙커로',null,()=>{G.hu.b=s;sfx.click();addText(s.x,s.y-34,'지휘관 이동','#ffd34a',9);closeMenu()});
     const rc=repairCost(s);
@@ -3946,44 +3945,53 @@ const mkName=ty=>ty==='rifle'?(hq('rifle3')?' Mk.III':hq('rifle2')?' Mk.II':''):
    예전엔 연구 9줄·벙커 승급·벙커 증설·사령부 승급·테크 10개를 각각 골라서 샀음(병렬).
    이제 한 줄(PATH)로 이어 붙여서 '강화' 버튼만 누르면 다음 칸이 열림(직렬).
    전투 코드는 그대로 META.lv / brank / bx / hql / tech 를 읽고, 그 값은 META.path(완료한 칸 수)에서 다시 계산함. */
-const PATH_MS=[['tech','rifle2'],['bx',0],['hq',1],['tech','sniper2'],['rank',1],['tech','tank'],['bx',1],['tech','drone2'],['hq',2],['tech','jet'],['bx',2],['rank',2],['tech','rifle3'],['hq',3],['tech','sniper3'],['bx',3],['tech','orb2'],['tech','tank2'],['rank',3],['bx',4],['tech','jet2'],['bx',5]];
-const PATH_CH=[3,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5];
+const PATH_MS1=[['tech','rifle2'],['bx',0],['hq',1],['tech','sniper2'],['rank',1],['tech','tank'],['bx',1],['tech','drone2'],['hq',2],['tech','jet'],['bx',2],['rank',2],['tech','rifle3'],['hq',3],['tech','sniper3'],['bx',3],['tech','orb2'],['tech','tank2'],['rank',3],['bx',4],['tech','jet2'],['bx',5]];
+const PATH_CH1=[3,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5];
+/* 1.35: 벙커 포탑(예전엔 판 안에서 벙커마다 광물로 장착)도 강화 경로 돌파로 — 열면 모든 벙커 지붕에 포탑 */
+const PATH_MS=[['tech','rifle2'],['bx',0],['hq',1],['tech','sniper2'],['rank',1],['tur',0],['tech','tank'],['bx',1],['tech','drone2'],['hq',2],['tech','jet'],['bx',2],['rank',2],['tur',1],['tech','rifle3'],['hq',3],['tech','sniper3'],['bx',3],['tech','orb2'],['tech','tank2'],['rank',3],['tur',2],['bx',4],['tech','jet2'],['bx',5]];
+const PATH_CH=[3,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5];
+const TUR_PATH=[{coin:600,core:40},{coin:2200,core:140},{coin:6500,core:320}];
 const PATH_PREF=['rifle','bhp','sniper','slots','funds','barmor','build','wire','tank'];
-const PATH=(()=>{const P=[],lv={},R=id=>RESEARCH.find(r=>r.id===id);let tank=false,s=0;
+function genPath(MS,CH){const P=[],lv={},R=id=>RESEARCH.find(r=>r.id===id);let tank=false,s=0;
   const stat=force=>{let best=null,bs=1e9;for(const id of PATH_PREF){if(force&&!force.includes(id))continue;if(id==='tank'&&!tank)continue;const r=R(id),l=lv[id]|0,mx=r.max;if(l>=mx)continue;
       const sc=id==='tank'?(l)/(mx-1):(l+1)/mx;if(sc<bs-1e-9){bs=sc;best=id}}
     if(!best)return false;lv[best]=(lv[best]|0)+1;P.push({k:'r',id:best,l:lv[best],coin:Math.round(28*Math.pow(1.04,s)/5)*5||5,core:0});s++;return true};
-  PATH_MS.forEach(([k,v],ci)=>{const n=PATH_CH[ci]||5;let need=0;if(k==='rank')need=RANKS[v].req;
+  MS.forEach(([k,v],ci)=>{const n=CH[ci]||5;let need=0;if(k==='rank')need=RANKS[v].req;
     for(let j=0;j<n;j++){const have=(lv.bhp|0)+(lv.barmor|0),left=n-j;stat(need-have>=left?['bhp','barmor']:null)}
     while(k==='rank'&&(lv.bhp|0)+(lv.barmor|0)<need&&stat(['bhp','barmor']));
     if(k==='tech'){const x=TECH.find(y=>y.id===v);P.push({k,id:v,coin:0,core:x.cost});if(v==='tank'){tank=true;lv.tank=Math.max(1,lv.tank|0)}}
     else if(k==='hq')P.push({k,i:v,coin:0,core:HQL[v].cost,zc:HQL[v].zc});
     else if(k==='rank')P.push({k,i:v,coin:RANKS[v].coin|0,core:RANKS[v].cost});
-    else if(k==='bx')P.push({k,i:v,coin:BX[v].coin,core:BX[v].core,zc:BX[v].zc})});
-  while(stat(null));return P})();
-function pathState(n){const s={lv:{},brank:0,bx:0,hql:1,tech:{}};for(let i=0;i<n&&i<PATH.length;i++){const p=PATH[i];
+    else if(k==='bx')P.push({k,i:v,coin:BX[v].coin,core:BX[v].core,zc:BX[v].zc});
+    else if(k==='tur')P.push({k,i:v,coin:TUR_PATH[v].coin,core:TUR_PATH[v].core})});
+  while(stat(null));return P}
+const PATH=genPath(PATH_MS,PATH_CH);
+function pathState(n){const s={lv:{},brank:0,bx:0,hql:1,tech:{},tur:0};for(let i=0;i<n&&i<PATH.length;i++){const p=PATH[i];
     if(p.k==='r')s.lv[p.id]=(s.lv[p.id]|0)+1;else if(p.k==='tech'){s.tech[p.id]=1;if(p.id==='tank')s.lv.tank=Math.max(1,s.lv.tank|0)}
-    else if(p.k==='hq')s.hql=p.i+1;else if(p.k==='rank')s.brank=p.i;else if(p.k==='bx')s.bx=p.i+1}return s}
-function applyPath(){const s=pathState(META.path|0);META.lv=s.lv;META.brank=s.brank;META.bx=Math.min(BX.length,s.bx+(META.bxPaid|0));META.hql=s.hql;META.tech=s.tech;META.rankV=2}
+    else if(p.k==='hq')s.hql=p.i+1;else if(p.k==='rank')s.brank=p.i;else if(p.k==='bx')s.bx=p.i+1;else if(p.k==='tur')s.tur=p.i+1}return s}
+function applyPath(){const s=pathState(META.path|0);META.lv=s.lv;META.brank=s.brank;META.bx=Math.min(BX.length,s.bx+(META.bxPaid|0));META.hql=s.hql;META.tech=s.tech;META.turLv=s.tur;META.rankV=2}
 const pathCur=()=>PATH[META.path|0];
 const pathZoneOk=p=>!p||!p.zc||(META.zc|0)>=p.zc;
 const pathCan=()=>{const p=pathCur();return !!p&&pathZoneOk(p)&&(META.gems|0)>=p.coin&&(META.cores|0)>=p.core};
 function pathBuy(){const p=pathCur();if(!pathCan())return null;META.gems=(META.gems|0)-p.coin;META.cores=(META.cores|0)-p.core;META.path=(META.path|0)+1;applyPath();saveMeta();return p}
 /* 예전 방식으로 산 것 → 쓴 코인·코어 돌려주고, 그 돈으로 강화 경로를 자동으로 진행 */
-(()=>{if(META.pathV)return;let coin=0,core=0;const L=META.lv||{};
+(()=>{if(META.pathV)return;META.pathV2=1;let coin=0,core=0;const L=META.lv||{};
   for(const r of RESEARCH){const n=Math.min(r.max,L[r.id]|0);for(let l=0;l<n;l++){if(r.id==='tank'&&l===0&&META.tech&&META.tech.tank)continue;coin+=Math.round(r.base*Math.pow(r.g,l));if((l+1)%5===0)core+=BT_CORE[Math.min(3,(l+1)/5-1)]}}
   for(let i=0;i<Math.min(BX.length,META.bx|0);i++){coin+=BX[i].coin;core+=BX[i].core}
   for(let i=1;i<=Math.min(RANKS.length-1,META.brank|0);i++){coin+=RANKS[i].coin|0;core+=RANKS[i].cost|0}
   for(let i=1;i<Math.min(HQL.length,META.hql|0);i++)core+=HQL[i].cost|0;
   for(const x of TECH)if(META.tech&&META.tech[x.id])core+=x.cost;
-  META.gems=(META.gems|0)+coin;META.cores=(META.cores|0)+core;META.path=0;META.bxPaid=0;META.pathV=1;applyPath();
+  META.gems=(META.gems|0)+coin;META.cores=(META.cores|0)+core;META.path=0;META.bxPaid=0;META.pathV=2;applyPath();
   let n=0;while(pathBuy())n++;META.pathMig={coin,core,n};saveMeta()})();
+if((META.pathV|0)===1){const OLD=genPath(PATH_MS1,PATH_CH1);let coin=0,core=0;for(let i=0;i<Math.min(OLD.length,META.path|0);i++){coin+=OLD[i].coin;core+=OLD[i].core}
+  META.gems=(META.gems|0)+coin;META.cores=(META.cores|0)+core;META.path=0;META.pathV=2;applyPath();let n=0;while(pathBuy())n++;META.pathMig2={coin,core,n};saveMeta()}
 applyPath();
 function pathInfo(p){if(!p)return null;
   if(p.k==='r'){const r=RESEARCH.find(x=>x.id===p.id),lvNow=p.id==='tank'?p.l:p.l;return{ic:RES_IC[p.id]||'icog',nm:r.name,lv:`Lv ${lvNow}`,ds:r.desc,ms:false}}
   if(p.k==='tech'){const x=TECH.find(y=>y.id===p.id);return{ic:x.ic,nm:x.name,lv:'해금',ds:x.desc,ms:true}}
   if(p.k==='hq')return{ic:'@@base',nm:'사령부 승급 · '+HQL[p.i].name,lv:'Lv '+(p.i+1),ds:HQL[p.i].tier+' 테크 개방',ms:true};
   if(p.k==='rank'){const R=RANKS[p.i];return{ic:'@@'+['bunker','bunker2','bunker3','bunker4'][p.i],nm:'벙커 승급 · '+R.name,lv:'등급 '+(p.i+1),ds:`수용 ${R.cap}명 · 체력 +${Math.round(R.hp*100)}% · 받는 피해 -${Math.round(R.arm*100)}%`,ms:true}}
+  if(p.k==='tur')return{ic:'@@tur'+(p.i+1),nm:(p.i?'포탑 강화 · ':'벙커 포탑 · ')+TUR.name[p.i],lv:'Lv '+(p.i+1),ds:p.i?`모든 벙커 포탑이 ${TUR.name[p.i]}(으)로 · 피해 ×${TUR.dmg[p.i]}`:'모든 벙커 지붕에 포탑 · 스스로 돌며 사격',ms:true};
   if(p.k==='bx')return{ic:'@@bunker',nm:'벙커 증설',lv:`${BASE_BUNKERS+p.i+1}개`,ds:`한 판에 벙커 ${BASE_BUNKERS+p.i+1}개 · 병사를 더 배치해 화력이 크게 늘어요`,ms:true}}
 const icBg=ic=>ic.startsWith('@')?kIco(ic):`var(--a-${ic})`;
 const pathNextMs=()=>{for(let i=META.path|0;i<PATH.length;i++)if(PATH[i].k!=='r')return i;return -1};
@@ -4057,7 +4065,7 @@ function renderBaseTab(){
     <div class="baseTop"><i class="hqIc" style="background-image:${kIco('@@base')}"></i><div><small>사령부 Lv ${L}/${HQL.length}</small><b>${C.name}</b><div class="tier">${pips(HQL.length,L)}</div></div></div></div>`;
   h+=`<div class="bSec">해금한 장비</div><div class="techG">`+TECH.map(x=>{const on=hq(x.id);return `<div class="tg${on?' on':''}"><i style="background-image:${kIco(x.ic)}"></i><b>${x.name}</b><small>${on?'사용 중':whereNode(p=>p.k==='tech'&&p.id===x.id)}</small></div>`}).join('')+'</div>';
   const rows=[['한 판 벙커 수',`${maxBunkers()} / ${BASE_BUNKERS+BX.length}개`],['벙커 수용',`${R.cap}명`],['벙커 체력',`+${Math.round(R.hp*100+mlv('bhp')*10)}%`],['벙커 받는 피해',`-${Math.round(R.arm*100+mlv('barmor')*4)}%`],
-    ['방어선 부지',`${BASE_SLOTS+mlv('slots')} / 18칸`],['시작 광물',fmt(200+30*mlv('funds'))],['소총병 화력',`+${mlv('rifle')*8}%`],['저격병 화력',`+${mlv('sniper')*8}%`],['건설 속도',`+${mlv('build')*10}%`],['전기 철조망',mlv('wire')?`Lv ${mlv('wire')}`:'없음'],['탱크 포신',mlv('tank')?`+${(mlv('tank')-1)*25}%`:'잠김']];
+    ['방어선 부지',`${BASE_SLOTS+mlv('slots')} / 18칸`],['시작 광물',fmt(200+30*mlv('funds'))],['소총병 화력',`+${mlv('rifle')*8}%`],['저격병 화력',`+${mlv('sniper')*8}%`],['건설 속도',`+${mlv('build')*10}%`],['전기 철조망',mlv('wire')?`Lv ${mlv('wire')}`:'없음'],['탱크 포신',mlv('tank')?`+${(mlv('tank')-1)*25}%`:'잠김'],['벙커 포탑',(META.turLv|0)?TUR.name[(META.turLv|0)-1]:'없음']];
   h+=`<div class="bSec">부대 능력치</div>`+rows.map(([k,v])=>`<div class="bRow"><span>${k}</span><b>${v}</b></div>`).join('')+
     `<button type="button" class="kb gold bGo" id="btnGoPath">${ai('irank')}강화하러 가기</button>`;
   $('baseBox').innerHTML=h;$('btnGoPath').onclick=()=>{auInit();sfx.click();setTab('lab')};
@@ -4097,13 +4105,13 @@ const DEV_DEX_ALL=true;/* 출시 전 false: 도감 미발견 유닛도 보이게
 const stageOpen=i=>DEV_ALL_ZONES||i<=(META.zc|0);
 const hellOpen=()=>best.wave>=15;
 /* 전투력 = 실제 강함(화력 × 방어 × 병력 칸 × 기타)을 봇 시뮬레이션에 맞춰 환산. 처음 1,000 */
-function powerS(){const R=RANKS[brank()],mk=t=>hq(t+'3')?1.7:hq(t+'2')?1.3:1;
+function powerS(){const TP=1+[0,.06,.12,.2][Math.min(3,META.turLv|0)],R=RANKS[brank()],mk=t=>hq(t+'3')?1.7:hq(t+'2')?1.3:1;
   const off=.55*(1+.08*mlv('rifle'))*mk('rifle')+.45*(1+.08*mlv('sniper'))*mk('sniper');
   const def=(1+.1*mlv('bhp')+R.hp)/Math.max(.2,1-.04*mlv('barmor')-R.arm);
   const slot=maxBunkers()*R.cap/8;
   const tk=hq('tank')?Math.min(4,[0,0,1,2,3][hqLv()]+(hq('tank2')?1:0))*(1+.25*Math.max(0,mlv('tank')-1))*(hq('tank2')?1.4:1):0;
   const ex=1+.06*tk+(hq('jet')?.08:0)+(hq('jet2')?.1:0)+(hq('drone2')?.03:0)+(hq('orb2')?.04:0)+.015*mlv('wire')+.01*mlv('funds')+.004*mlv('build')+.004*mlv('slots')+heroPow();
-  return Math.pow(off,.9)*Math.pow(def,.35)*slot*ex}
+  return Math.pow(off,.9)*Math.pow(def,.35)*slot*ex*TP}
 const myPower=()=>Math.round(powerS()*1000);
 /* 구역 난이도: 마지막 웨이브 적 체력 × 공격력^0.6 (지옥 ×2.2) → 권장 = 봇이 여유 있게 깨는 선(통과 한계의 약 1.27배) */
 function zoneE(z){const Z=ZONES[z],w=Z.waves,lt=Math.max(0,w-TUNE.lateW);
@@ -4481,7 +4489,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=119,WEB_NAME='1.34.3';
+const WEB_BUILD=120,WEB_NAME='1.35.0';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
