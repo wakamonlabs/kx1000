@@ -35,6 +35,11 @@ node tools/ui-check.cjs --file 경로/vNNN.html   # 작업 중인 파일 검사
 - (v1.40.0에서 고침) 지휘관 탭 이름 버튼 Arial·작은 글자, 로비 "여유" 글자, 강화 탭 `i.llv`
 - 설정: 테스트 버튼 "모든 성장 가득 채우기"가 단어 중간에서 두 줄로 꺾임 (출시 전 테스트 기능과 함께 제거 예정)
 
+## 번역 (v1.43.0부터)
+
+- 화면에 나오는 새 한국어 문구를 넣으면 `i18n/en.json`에도 영어를 넣습니다. 자세한 방법은 `i18n/README.md`.
+- 영어는 한국어보다 길어지기 쉬우므로 UI를 고친 뒤 `node tools/ui-check.cjs --lang en`도 돌립니다(번역 안 된 문구 수도 나옴).
+
 ## DESIGN.md를 바꿀 때
 
 `DESIGN.md`는 Google Stitch의 DESIGN.md 형식(https://github.com/google-labs-code/design.md)을 따릅니다. 고친 뒤 검사합니다.

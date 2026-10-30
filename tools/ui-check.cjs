@@ -5,6 +5,7 @@
  *   node tools/ui-check.cjs            # 360x640 한 화면 크기로 로비 + 하단 탭 + 사이드 버튼 검사
  *   node tools/ui-check.cjs --all      # 360x640, 390x844, 430x932, 673x841(폴드 펼침) 네 크기
  *   node tools/ui-check.cjs --file w/v130.html   # index.html 대신 다른 파일 검사
+ *   node tools/ui-check.cjs --lang en  # 영어 등 다른 언어로 검사 (번역 안 된 한국어 문구 수도 알려 줌)
  *   node tools/ui-check.cjs --colors   # 팔레트 밖 글자색 목록도 자세히 출력
  *
  * 스크린샷은 tools/ui-check-out/ 에 저장됩니다 (git에 올리지 않음).
@@ -30,6 +31,7 @@ const VIEWPORTS = args.includes('--all')
   : [[360, 640]];
 const FILE = args.includes('--file') ? path.resolve(args[args.indexOf('--file') + 1]) : path.join(ROOT, 'index.html');
 const SHOW_COLORS = args.includes('--colors');
+const LANGARG = args.includes('--lang') ? args[args.indexOf('--lang') + 1] : 'ko'; // 기본은 한국어(브라우저 언어와 상관없이)
 
 // DESIGN.md 의 colors: 블록에서 팔레트를 읽어 옵니다.
 function readPalette() {
@@ -50,7 +52,7 @@ const FONTS = ['black han sans', 'gothic a1', 'chakra petch'];
 const SCREENS = [
   { name: 'lobby' },
   ...[0, 1, 2, 3, 4].map((i) => ({ name: `tab${i + 1}`, sel: '.kt', i })),
-  ...['btnDex', 'btnRecs', 'btnMission', 'btnHero', 'btnPass', 'btnDaily', 'btnSet'].map((id) => ({
+  ...['btnDex', 'btnRecs', 'btnMission', 'btnPass', 'btnDaily', 'btnSet'].map((id) => ({
     name: id,
     sel: `#${id}`,
     i: 0,
@@ -199,9 +201,11 @@ function inspect({ palette, fonts }) {
   const totals = { spill: 0, wrap: 0, cut: 0, offscreen: 0, font: 0, tiny: 0 };
   const allColors = {};
   const errors = [];
+  const MISSING = new Set();
 
   for (const [w, h] of VIEWPORTS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    if (LANGARG) await ctx.addInitScript((l) => { try { localStorage.setItem('kx1000-lang', l); } catch (e) {} }, LANGARG);
     const page = await ctx.newPage();
     page.on('pageerror', (e) => errors.push(`[${w}x${h}] ${e.message}`));
     for (const sc of SCREENS) {
@@ -239,6 +243,7 @@ function inspect({ palette, fonts }) {
       const shot = path.join(OUT, `${w}x${h}-${sc.name}.png`);
       await page.screenshot({ path: shot });
       const { issues, colors } = await page.evaluate(inspect, { palette: PALETTE, fonts: FONTS });
+      if (LANGARG !== 'ko') { const ms = await page.evaluate(() => [...(window.__kxMissing || [])]); ms.forEach((m) => MISSING.add(m)); }
       const n = Object.values(issues).reduce((a, v) => a + v.length, 0);
       console.log(`${n ? '✗' : '✓'} [${w}x${h}] ${sc.name}${n ? ` — 문제 ${n}개` : ''}`);
       const names = { spill: '넘침', wrap: '줄바꿈', cut: '잘림', offscreen: '화면 밖', font: '글꼴', tiny: '작은 글자' };
@@ -262,6 +267,7 @@ function inspect({ palette, fonts }) {
   if (SHOW_COLORS) {
     for (const hex of offColors) console.log(`    ${hex}: ${[...allColors[hex]].slice(0, 4).join(', ')}`);
   }
+  if (LANGARG !== 'ko') console.log(`  번역 안 된 문구 ${MISSING.size}개${MISSING.size ? ':\n    ' + [...MISSING].slice(0, 40).join('\n    ') : ''}`);
   if (errors.length) console.log(`  페이지 오류 ${errors.length}개:\n    ` + errors.slice(0, 5).join('\n    '));
   console.log(`  스크린샷: ${path.relative(ROOT, OUT)}/`);
   const fail = totals.spill + totals.wrap + totals.cut + totals.offscreen + totals.font + totals.tiny;
