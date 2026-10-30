@@ -59,7 +59,16 @@ const SCREENS = [
   })),
   { name: 'sortie', sel: '#btnStart', i: 0 },
   { name: 'pause', js: '__kx.start(); __kx.pause()' },
-  { name: 'win', js: '__kx.start(); __kx.zoneClear()', wait: 3500 },
+  { name: 'win', js: '__kx.start(); __kx.zoneClear()', wait: 5500 },
+  { name: 'att', sel: '#btnDaily', i: 0 },
+  { name: 'heroCard', js: "document.querySelectorAll('.kt')[4].click(); setTimeout(()=>{const c=document.querySelectorAll('.khc')[1]; c&&c.click()},300)" },
+  { name: 'achv', js: "document.getElementById('btnMission').click(); setTimeout(()=>{const t=document.querySelector('.kms-tab[data-t=\"1\"]'); t&&t.click()},300)" },
+  { name: 'dexCard', js: "document.getElementById('btnDex').click(); setTimeout(()=>{const c=document.querySelector('#kPopB .kdx, #kPopB [data-e]'); c&&c.click()},300)" },
+  { name: 'pull10', js: '__kx.pull && __kx.pull(10)' },
+  { name: 'perk', js: '__kx.start(); setTimeout(()=>__kx.openPerk && __kx.openPerk(),300)' },
+  { name: 'upg', js: '__kx.start(); setTimeout(()=>__kx.openUpg && __kx.openUpg(),300)' },
+  { name: 'slotMenu', js: '__kx.start(); setTimeout(()=>__kx.openMenu && __kx.openMenu(0,1),300)' },
+  { name: 'bunkerMenu', js: '__kx.start(); setTimeout(()=>__kx.openMenu && __kx.openMenu(0,2),300)' },
   { name: 'lose', js: '__kx.start(); __kx.baseDown()', wait: 3500 },
 ];
 
@@ -138,7 +147,19 @@ function inspect({ palette, fonts }) {
     return false;
   };
 
-  const issues = { spill: [], wrap: [], cut: [], offscreen: [], font: [], tiny: [] };
+  const issues = { spill: [], wrap: [], cut: [], offscreen: [], font: [], tiny: [], panel: [] };
+  // 글자를 감싼 가장 가까운 '보이는 판'(배경·테두리가 있는 요소)
+  const panelOf = (el) => {
+    for (let p = el; p && p !== document.body; p = p.parentElement) {
+      const s = getComputedStyle(p);
+      const bg = s.backgroundColor && !/rgba\(0, 0, 0, 0\)|transparent/.test(s.backgroundColor);
+      const img = s.backgroundImage && s.backgroundImage !== 'none';
+      const bd = parseFloat(s.borderTopWidth) > 0 && s.borderTopStyle !== 'none';
+      const bi = s.borderImageSource && s.borderImageSource !== 'none';
+      if ((bg || img || bd || bi) && p.getBoundingClientRect().width < innerWidth * 0.98) return p;
+    }
+    return null;
+  };
   const colors = {};
   const seen = new Set();
 
@@ -165,6 +186,15 @@ function inspect({ palette, fonts }) {
       if (tr.lines > 1) {
         if (!box.matches(CARD)) issues.wrap.push(`${who} 가 ${label(box)} 안에서 ${tr.lines}줄로 꺾임`);
         else if (s.wordBreak !== 'keep-all') issues.wrap.push(`${who} 가 ${label(box)} 안에서 단어 중간에 끊길 수 있음 (word-break: keep-all 필요)`);
+      }
+    }
+    // 1-2) 버튼이 아닌 판(카드·칩·말풍선) 밖으로 글자가 나감
+    if (!box) {
+      const pn = panelOf(el);
+      if (pn && pn !== el.parentElement?.closest('#frame') ) {
+        const b = pn.getBoundingClientRect();
+        const out = Math.max(b.left - tr.left, tr.right - b.right, b.top - tr.top - 2, tr.bottom - b.bottom - 2);
+        if (out > 2 && !clippedBetween(el, pn)) issues.panel.push(`${who} 가 ${label(pn)} 밖으로 ${out.toFixed(1)}px 나감`);
       }
     }
     // 2) 말줄임 없이 잘림
@@ -198,7 +228,7 @@ function inspect({ palette, fonts }) {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch();
   const url = 'file://' + FILE;
-  const totals = { spill: 0, wrap: 0, cut: 0, offscreen: 0, font: 0, tiny: 0 };
+  const totals = { spill: 0, wrap: 0, cut: 0, offscreen: 0, font: 0, tiny: 0, panel: 0 };
   const allColors = {};
   const errors = [];
   const MISSING = new Set();
@@ -231,7 +261,7 @@ function inspect({ palette, fonts }) {
         const ok = await page.evaluate((js) => {
           if (!window.__kx) return false;
           const t = document.getElementById('ovTitle');
-          if (t) t.hidden = true;
+          if (t && /__kx\.start\(/.test(js)) t.hidden = true; // 전투 화면일 때만 로비를 숨김
           try { new Function(js)(); return true; } catch (e) { return String(e); }
         }, sc.js);
         if (ok !== true) {
@@ -246,7 +276,7 @@ function inspect({ palette, fonts }) {
       if (LANGARG !== 'ko') { const ms = await page.evaluate(() => [...(window.__kxMissing || [])]); ms.forEach((m) => MISSING.add(m)); }
       const n = Object.values(issues).reduce((a, v) => a + v.length, 0);
       console.log(`${n ? '✗' : '✓'} [${w}x${h}] ${sc.name}${n ? ` — 문제 ${n}개` : ''}`);
-      const names = { spill: '넘침', wrap: '줄바꿈', cut: '잘림', offscreen: '화면 밖', font: '글꼴', tiny: '작은 글자' };
+      const names = { spill: '넘침', wrap: '줄바꿈', cut: '잘림', offscreen: '화면 밖', font: '글꼴', tiny: '작은 글자', panel: '판 밖' };
       for (const k of Object.keys(issues)) {
         totals[k] += issues[k].length;
         for (const m of issues[k]) console.log(`    [${names[k]}] ${m}`);
@@ -262,7 +292,7 @@ function inspect({ palette, fonts }) {
 
   const offColors = Object.keys(allColors);
   console.log('\n요약');
-  console.log(`  넘침 ${totals.spill} · 줄바꿈 ${totals.wrap} · 잘림 ${totals.cut} · 화면 밖 ${totals.offscreen} · 글꼴 ${totals.font} · 작은 글자 ${totals.tiny}`);
+  console.log(`  넘침 ${totals.spill} · 판 밖 ${totals.panel} · 줄바꿈 ${totals.wrap} · 잘림 ${totals.cut} · 화면 밖 ${totals.offscreen} · 글꼴 ${totals.font} · 작은 글자 ${totals.tiny}`);
   console.log(`  팔레트 밖 글자색 ${offColors.length}종 (경고)${SHOW_COLORS ? '' : ' — 자세히 보려면 --colors'}`);
   if (SHOW_COLORS) {
     for (const hex of offColors) console.log(`    ${hex}: ${[...allColors[hex]].slice(0, 4).join(', ')}`);
@@ -270,6 +300,6 @@ function inspect({ palette, fonts }) {
   if (LANGARG !== 'ko') console.log(`  번역 안 된 문구 ${MISSING.size}개${MISSING.size ? ':\n    ' + [...MISSING].slice(0, 40).join('\n    ') : ''}`);
   if (errors.length) console.log(`  페이지 오류 ${errors.length}개:\n    ` + errors.slice(0, 5).join('\n    '));
   console.log(`  스크린샷: ${path.relative(ROOT, OUT)}/`);
-  const fail = totals.spill + totals.wrap + totals.cut + totals.offscreen + totals.font + totals.tiny;
+  const fail = totals.spill + totals.panel + totals.wrap + totals.cut + totals.offscreen + totals.font + totals.tiny;
   process.exit(fail ? 1 : 0);
 })();
