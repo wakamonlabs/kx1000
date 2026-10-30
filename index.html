@@ -1468,7 +1468,9 @@ const H=640,TAU=Math.PI*2;
 const PCV=!window.KXApp&&window.matchMedia&&matchMedia('(pointer:fine)').matches&&Math.min(screen.width,screen.height)>600;
 let pcDev='390x844';try{const v=localStorage.getItem('kx1000-pcview');if(v)pcDev=v}catch(e){}
 function calcW(iw,ih){const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.min(600,w))}
-const TOPGAP0=(()=>{try{const v=localStorage.getItem('kx1000-topgap');if(v!=null&&+v>=0)return +v;const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden';(document.body||document.documentElement).appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}})();
+/* 1.42 안드로이드 앱: KXApp.safeInsets() = {top,bottom,left,right,hole} (dp=CSS px). hole=화면 위에 붙은 카메라 구멍의 아래 끝 */
+function nativeTop(){try{if(window.KXApp&&KXApp.safeInsets){const o=JSON.parse(KXApp.safeInsets()||'{}');if(o&&o.ok){const h=+o.hole||0,t=+o.top||0;return Math.max(0,Math.round(h>0?Math.min(t||1e9,h+4):t))}}}catch(e){}return -1}
+const TOPGAP0=(()=>{try{const v=localStorage.getItem('kx1000-topgap');if(v!=null&&+v>=0)return +v;{const n=nativeTop();if(n>=0)return n}const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden';(document.body||document.documentElement).appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}})();
 const W=(()=>{try{let iw=Math.max(320,window.innerWidth),ih=Math.max(480,window.innerHeight-84-TOPGAP0);if(PCV&&pcDev!=='full'){const d=pcDev.split('x').map(Number);if(d.length===2&&d[0]>0){iw=d[0];ih=Math.max(480,d[1]-84)}}const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.min(600,w))}catch(e){return 360}})();
 const WX=(W-360)/2;
 const ROW_Y=[394,452,452],NROWS=2,SLOT_W=60,BASE_Y=540,WAVE_LEN=20,MAX_ALIVE=420;
@@ -1497,8 +1499,9 @@ function pcFit(){
 }
 /* 화면 위 여백: 기기가 알려 주는 안전 영역(카메라 구멍·노치) 또는 설정에서 고른 값만큼 게임 전체를 내림 */
 let TOPGAP=-1;try{const v=localStorage.getItem('kx1000-topgap');if(v!=null)TOPGAP=+v}catch(e){}
-function envTop(){try{const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none';document.body.appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}}
+function envTop(){{const n=nativeTop();if(n>=0)return n}try{const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden;pointer-events:none';document.body.appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}}
 let TOPPX=0,TOPL=0;
+window.kxInsets=function(){try{if(TOPGAP<0){layout();syncTop()}}catch(e){}};
 function applyTopGap(){const g=TOPGAP>=0?TOPGAP:envTop();TOPPX=g;stage.style.paddingTop='0px';stage.style.boxSizing='border-box';frame.style.setProperty('--sat',g+'px')}
 function layout(){
   applyTopGap();pcFit();
@@ -4670,7 +4673,7 @@ $('btnDevReset').addEventListener('click',()=>{auInit();const b=$('btnDevReset')
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('ovSet').hidden){e.stopImmediatePropagation();closeSet()}},true);
 syncSet();
 
-function syncTop(){for(const b of document.querySelectorAll('#segTop button'))b.classList.toggle('on',+b.dataset.v===TOPGAP)}
+function syncTop(){for(const b of document.querySelectorAll('#segTop button'))b.classList.toggle('on',+b.dataset.v===TOPGAP);try{const sp=$('segTop').parentElement.querySelector('.st span');if(sp){const n=nativeTop();sp.textContent='카메라 구멍에 위쪽이 가리면 늘려 주세요'+(n>=0?' · 자동 감지 '+n:'')}}catch(e){}}
 document.querySelectorAll('#segTop button').forEach(b=>b.addEventListener('click',()=>{TOPGAP=+b.dataset.v;try{localStorage.setItem('kx1000-topgap',TOPGAP)}catch(e){}syncTop();sfx.click();layout()}));
 function syncShake(){syncTop();for(const b of document.querySelectorAll('#segShake button'))b.classList.toggle('on',+b.dataset.v===SHAKE)}
 document.querySelectorAll('#segShake button').forEach(b=>b.addEventListener('click',()=>{SHAKE=+b.dataset.v;try{localStorage.setItem('kx1000-shake',SHAKE)}catch(e){}syncShake();sfx.click();if(G&&SHAKE<=0)G.shake=0}));
@@ -4702,7 +4705,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=132,WEB_NAME='1.41.1';
+const WEB_BUILD=133,WEB_NAME='1.42.0';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
