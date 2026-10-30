@@ -27,7 +27,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
 final class GameViewController: UIViewController, WKScriptMessageHandler, WKNavigationDelegate, UIScrollViewDelegate {
     static let bg = UIColor(red: 0x0b / 255.0, green: 0x06 / 255.0, blue: 0x05 / 255.0, alpha: 1)
-    static let updateURL = URL(string: "https://raw.githubusercontent.com/wakamonlabs/kx1000/main/version.json")!
+    // 업데이트 정보 위치: 공개 저장소 kx1000-update 먼저, 없으면 예전 위치(본 저장소를 비공개로 돌리면 앞의 것만 씀)
+    static let updateURLs = [URL(string: "https://raw.githubusercontent.com/wakamonlabs/kx1000-update/main/version.json")!,
+                             URL(string: "https://raw.githubusercontent.com/wakamonlabs/kx1000/main/version.json")!]
 
     private var web: WKWebView!
     private var readyBuild = -1
@@ -138,7 +140,7 @@ final class GameViewController: UIViewController, WKScriptMessageHandler, WKNavi
         cfg.timeoutIntervalForRequest = 10
         cfg.timeoutIntervalForResource = 120
         let session = URLSession(configuration: cfg)
-        guard let data = syncGet(session, Self.updateURL),
+        guard let data = Self.updateURLs.lazy.compactMap({ syncGet(session, $0) }).first(where: { (try? JSONSerialization.jsonObject(with: $0)) != nil }),
               let o = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let v = o["version"] as? Int, let zipS = o["zip"] as? String, let zipU = URL(string: zipS) else { return }
         let sha = (o["sha256"] as? String) ?? ""

@@ -2031,10 +2031,11 @@ function sandbag(c,x,y,w,h,rot,tone=0){c.save();c.translate(x,y);c.rotate(rot);
   c.fillStyle=lin(c,0,-h/2,0,h/2,[[0,['#c4b28c','#b3a07a','#a8946c'][tone]],[1,['#7f6f50','#6e5f43','#665639'][tone]]]);rr(c,-w/2,-h/2,w,h,h/2);c.fill();
   c.strokeStyle='rgba(60,48,30,.6)';c.lineWidth=.35;c.beginPath();c.moveTo(-w*.28,-h/2+.4);c.lineTo(-w*.28,h/2-.4);c.moveTo(w*.28,-h/2+.4);c.lineTo(w*.28,h/2-.4);c.stroke();
   spec(c,-w*.15,-h*.18,w*.3,h*.18,.35);c.restore()}
+const BUNK_SQ=.7;/* 1.44 벙커 세로 비율(1=원래 그림) */
 function renderBunker(state,seed=7,im=IMG.bunker){
   const bw=66,bh=im?65:46,oy=im?42:23,ss=STRUCT_SS,cv=mk(bw*ss,bh*ss),c=cv.getContext('2d'),R=srand(seed+state*31);
   c.scale(ss,ss);c.translate(bw/2,oy);
-  if(im){const t=mk(cv.width,cv.height),tc=t.getContext('2d');tc.setTransform(ss,0,0,ss,bw/2*ss,oy*ss);const dw=56,dh=56*im.height/im.width;tc.drawImage(im,-dw/2,21-dh,dw,dh);c.save();c.setTransform(1,0,0,1,0,0);castShadow(c,t,2.6*ss,3.4*ss,ss*1.6,.55);c.drawImage(t,0,0);c.restore();t.width=t.height=0}else{
+  if(im){const t=mk(cv.width,cv.height),tc=t.getContext('2d');tc.setTransform(ss,0,0,ss,bw/2*ss,oy*ss);const dw=56,dh=56*im.height/im.width*BUNK_SQ;tc.drawImage(im,-dw/2,21-dh,dw,dh);c.save();c.setTransform(1,0,0,1,0,0);castShadow(c,t,2.6*ss,3.4*ss,ss*1.6,.55);c.drawImage(t,0,0);c.restore();t.width=t.height=0}else{
   c.fillStyle='rgba(0,0,0,.5)';rr(c,-25,-12,56,32,7);c.fill();
   for(const s of[-1,1])for(let i=0;i<4;i++){if(state===2&&R()<.4)continue;sandbag(c,s*29,-11+i*7.4,4.6,7.6,0,(i+(s>0?1:0))%3)}
   for(let i=0;i<5;i++){if(state>=1&&R()<.25*state)continue;sandbag(c,-17+i*8.5,17.4,8.4,4.4,0,i%3)}
@@ -2919,7 +2920,7 @@ function killTroop(t){
 /* 벙커 그림의 창문 위치(그림 안 좌표: x -33~33, y는 아래가 +). 등급별 그림이 달라서 따로. 적 방향에 맞는 창문에서 쏨 */
 const BUNKER_WIN=[[[-18.5,-7.2],[-8.1,-0.9],[7.9,-0.6],[18.0,-6.7]],[[-18.8,-6.4],[-10.7,-0.3],[1.4,2.0],[11.8,-0.2],[18.8,-5.8]],[[-18.8,-9.5],[-10.6,-3.1],[1.1,-1.2],[12.1,-2.6],[18.8,-9.2]],[[-19.3,-7.6],[-11.0,-1.7],[0.0,0.5],[10.9,-1.7],[18.7,-7.6]],[[-17.3,-10.4],[-10.4,-5.4],[0.0,-3.4],[10.4,-5.4],[17.4,-10.6]]];
 function bunkerWin(b,t){const W=BUNKER_WIN[clamp(G.btier|0,0,4)]||BUNKER_WIN[0],n=W.length,cx=Math.cos(t.aim||Math.PI/2),i=b.troops.indexOf(t);
-  const f=clamp(cx*1.35,-1,1),k=clamp(Math.round((f+1)/2*(n-1)+(i%2?.18:-.18)),0,n-1);return W[k]}
+  const f=clamp(cx*1.35,-1,1),k=clamp(Math.round((f+1)/2*(n-1)+(i%2?.18:-.18)),0,n-1);return [W[k][0],21-(21-W[k][1])*BUNK_SQ]}
 /* 벙커 포탑: 벙커 위에 달아 스스로 돌며 쏨. 판 안에서 광물로 장착·강화(Lv1~3) */
 const TUR={cost:[180,320,480],dmg:[1,1.75,2.7],rate:[.62,.46,.34],rng:[150,165,182],size:[26,28.5,34.5],name:['경포탑','쌍열 포탑','돌격 포탑']};
 function turPos(s){return{x:s.x,y:s.y+(FLIP?12:-12)}}
@@ -2934,7 +2935,7 @@ function updTurret(s,dt){const u=s.tur,L=u.lv-1,p=turPos(s);u.cd-=dt*rateMul();i
   hurt(tg,d,crit,tg.x,tg.y);if(Math.random()<.5)addP(SPARK,tg.x,tg.y,rand(-60,60),rand(-80,10),.12,1,tg.d.bio);sfx.rifle();
 }
 function drawTurret(s){const u=s.tur;if(!u||s.building||s.dead)return;const c=ctx,L=u.lv-1,im=IMG['tur'+u.lv],sz=TUR.size[L];
-  const b=(FLIP?-u.a:u.a)+Math.PI/2,k=u.kick>0?u.kick*14:0;c.save();c.translate(s.x,s.y-12);
+  const b=(FLIP?-u.a:u.a)+Math.PI/2,k=u.kick>0?u.kick*14:0;c.save();c.translate(s.x,s.y-12*BUNK_SQ);
   c.fillStyle='rgba(0,0,0,.35)';c.beginPath();c.ellipse(1.5,2.5,sz*.32,sz*.22,0,0,TAU);c.fill();
   c.rotate(b);c.translate(0,k);if(im)c.drawImage(im,-sz/2,-sz/2,sz,sz);else{c.fillStyle='#2b2b30';c.beginPath();c.arc(0,0,sz*.3,0,TAU);c.fill();c.fillStyle='#55555c';c.fillRect(-1.5,-sz*.48,3,sz*.4)}
   c.restore()}
@@ -4794,7 +4795,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=136,WEB_NAME='1.43.2';
+const WEB_BUILD=137,WEB_NAME='1.44.0';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
