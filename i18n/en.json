@@ -982,5 +982,9 @@
  "기본": "Default",
  "듀오 접음": "Duo closed",
  "폴드8 접음": "Fold8 closed",
- "모양(시험) {}": "Look (test) {}"
+ "모양(시험) {}": "Look (test) {}",
+ "벙커 체력 +{}%": "Bunker HP +{}%",
+ "모든 벙커에 포탑": "Turrets on all bunkers",
+ "구역 {}개": "{} Zones",
+ "꾹 누르면 연속 강화": "Hold to upgrade repeatedly"
 }
