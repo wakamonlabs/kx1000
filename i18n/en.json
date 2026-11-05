@@ -986,5 +986,11 @@
  "벙커 체력 +{}%": "Bunker HP +{}%",
  "모든 벙커에 포탑": "Turrets on all bunkers",
  "구역 {}개": "{} Zones",
- "꾹 누르면 연속 강화": "Hold to upgrade repeatedly"
+ "꾹 누르면 연속 강화": "Hold to upgrade repeatedly",
+ "장비": "Gear",
+ "능력치": "Stats",
+ "벙커 수": "Bunkers",
+ "수용 인원": "Capacity",
+ "받는 피해": "Dmg taken",
+ "방어 부지": "Plots"
 }
