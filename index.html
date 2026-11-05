@@ -1590,7 +1590,7 @@ function nativeTop(){try{if(window.KXApp&&KXApp.safeInsets){const o=JSON.parse(K
 const TOPGAP0=(()=>{try{const v=localStorage.getItem('kx1000-topgap');if(v!=null&&+v>=0)return +v;{const n=nativeTop();if(n>=0)return n}const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden';(document.body||document.documentElement).appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}})();
 const W=(()=>{try{let iw=Math.max(320,window.innerWidth),ih=Math.max(480,window.innerHeight-84-TOPGAP0);if(PCV&&pcDev!=='full'){const d=pcDev.split('x').map(Number);if(d.length===2&&d[0]>0){iw=d[0];ih=Math.max(480,d[1]-84)}}const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.min(600,w))}catch(e){return 360}})();
 const WX=(W-360)/2;
-const ROW_Y=[394,452,452],NROWS=2,SLOT_W=60,BASE_Y=540,WAVE_LEN=20,MAX_ALIVE=420;
+const ROW_Y=[384,442,442],NROWS=2,SLOT_W=60,BASE_Y=540,WAVE_LEN=20,MAX_ALIVE=420;
 const OPEN_Y=[498,511,524];
 const INK='#f4e7d3',DIM='#a48e78',AMBER='#ffb23e',DANGER='#ff4b3a';
 const $=id=>document.getElementById(id);
@@ -4031,7 +4031,7 @@ function drawWorld(rdt){
   c.drawImage(ground,0,0,W,H);c.drawImage(decal,0,0,W,H);
   if(FLIP){c.save();c.translate(0,2*H);c.scale(1,-1);c.drawImage(ground,0,(H-FPAD-OY-20)*GS,W*GS,(FPAD+OY+20)*GS,0,H-FPAD-OY-20,W,FPAD+OY+20);c.restore();c.fillStyle='rgba(10,5,4,.25)';c.fillRect(0,H,W,FPAD+OY+20)}
   if(FLIP){const ext=SH-FPAD-H+24;if(ext>0){c.save();c.scale(1,-1);c.drawImage(ground,0,0,W*GS,ext*GS,0,0,W,ext);c.drawImage(decal,0,0,W*GS,ext*GS,0,0,W,ext);c.restore();const g=c.createLinearGradient(0,0,0,-ext);g.addColorStop(0,'rgba(10,5,4,0)');g.addColorStop(1,'rgba(10,5,4,.45)');c.fillStyle=g;c.fillRect(0,-ext,W,ext)}}
-  drawSlots();drawBase();
+  drawBase();drawSlots();
   if(menuSlot&&!menu.hidden){const x=WX+menuSlot.col*SLOT_W+3,y=ROW_Y[menuSlot.row]-17;c.strokeStyle=AMBER;c.lineWidth=1.6;rr(c,x,y,54,34,5);c.stroke()}
   for(const s of G.structs)drawStruct(s);
   for(const s of G.structs){const rl=repLeft(s);if(rl<=0||s.dead)continue;const x=s.x+22,y=s.y-(s.kind==='bunker'?30:16),_m=mirY(y);c.fillStyle='rgba(12,12,13,.75)';c.beginPath();c.arc(x,y,5,0,TAU);c.fill();c.strokeStyle='#7ae9ff';c.lineWidth=1.6;c.beginPath();c.arc(x,y,4,-Math.PI/2,-Math.PI/2+TAU*rl/REP_CD);c.stroke();if(_m)c.restore()}
@@ -4862,7 +4862,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=146,WEB_NAME='1.47.0';
+const WEB_BUILD=147,WEB_NAME='1.47.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
