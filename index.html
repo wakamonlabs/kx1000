@@ -1590,7 +1590,7 @@ function nativeTop(){try{if(window.KXApp&&KXApp.safeInsets){const o=JSON.parse(K
 const TOPGAP0=(()=>{try{const v=localStorage.getItem('kx1000-topgap');if(v!=null&&+v>=0)return +v;{const n=nativeTop();if(n>=0)return n}const d=document.createElement('div');d.style.cssText='position:fixed;left:0;top:0;width:1px;height:env(safe-area-inset-top,0px);visibility:hidden';(document.body||document.documentElement).appendChild(d);const h=d.offsetHeight;d.remove();return h}catch(e){return 0}})();
 const W=(()=>{try{let iw=Math.max(320,window.innerWidth),ih=Math.max(480,window.innerHeight-84-TOPGAP0);if(PCV&&pcDev!=='full'){const d=pcDev.split('x').map(Number);if(d.length===2&&d[0]>0){iw=d[0];ih=Math.max(480,d[1]-84)}}const w=Math.round(iw/ih*H/2)*2;return Math.max(360,Math.min(600,w))}catch(e){return 360}})();
 const WX=(W-360)/2;
-const ROW_Y=[384,442,442],NROWS=2,SLOT_W=60,BASE_Y=540,WAVE_LEN=20,MAX_ALIVE=420;
+const ROW_Y=[384,442,442],NROWS=2,SLOT_W=60,BASE_Y=510,WAVE_LEN=20,MAX_ALIVE=420;
 const OPEN_Y=[498,511,524];
 const INK='#f4e7d3',DIM='#a48e78',AMBER='#ffb23e',DANGER='#ff4b3a';
 const $=id=>document.getElementById(id);
@@ -3649,8 +3649,8 @@ function drawSlots(){
   for(let row=0;row<NROWS;row++)for(let col=0;col<6;col++){
     if(G.slots[row][col])continue;
     const x=WX+col*SLOT_W+4,y=ROW_Y[row]-15;
-    if(!slotUnlocked(row,col)){c.fillStyle='rgba(8,4,3,.32)';rr(c,x,y,52,30,4);c.fill();c.strokeStyle='rgba(164,142,120,.18)';c.lineWidth=1;c.stroke();
-      const lx=x+26,ly=y+16;c.strokeStyle='rgba(164,142,120,.45)';c.lineWidth=1.2;c.beginPath();if(FLIP)c.arc(lx,ly+3,2.6,0,Math.PI);else c.arc(lx,ly-3,2.6,Math.PI,0);c.stroke();c.fillStyle='rgba(164,142,120,.45)';c.fillRect(lx-3.6,FLIP?ly-3:ly-2.6,7.2,5.6);continue}
+    if(!slotUnlocked(row,col)){c.strokeStyle='rgba(164,142,120,.12)';c.lineWidth=1;rr(c,x,y,52,30,4);c.stroke();
+      const lx=x+26,ly=y+16;c.strokeStyle='rgba(164,142,120,.3)';c.lineWidth=1.2;c.beginPath();if(FLIP)c.arc(lx,ly+3,2.6,0,Math.PI);else c.arc(lx,ly-3,2.6,Math.PI,0);c.stroke();c.fillStyle='rgba(164,142,120,.3)';c.fillRect(lx-3.6,FLIP?ly-3:ly-2.6,7.2,5.6);continue}
     const pul=hint?.18+.12*Math.sin(G.t*4+col+row):.1;
     c.strokeStyle=`rgba(255,178,62,${pul})`;c.lineWidth=1;c.setLineDash([3,3]);rr(c,x,y,52,30,4);c.stroke();c.setLineDash([]);
     c.strokeStyle=`rgba(255,178,62,${pul+.05})`;c.beginPath();c.moveTo(x+26,y+11);c.lineTo(x+26,y+19);c.moveTo(x+22,y+15);c.lineTo(x+30,y+15);c.stroke();
@@ -3658,7 +3658,11 @@ function drawSlots(){
 }
 const BASE_T=462;
 /* 1.47 특수 사령부 그림 자리(그리기 좌표)와 그림 안 한 점의 전장 좌표 */
-function HQR(){const Q=shqById(G&&G.shq),im=Q&&IMG['shq'+Q.n],h=94,asp=im?im.width/im.height:3.6,w=Math.min(W-10,h*asp*1.3);return{x:(W-w)/2,y:BASE_T+4,w,h}}
+const HQ_H=84;
+function HQR(){const Q=shqById(G&&G.shq),im=Q&&IMG['shq'+Q.n],h=HQ_H,asp=im?im.width/im.height:3.6,w=Math.min(W-10,h*asp*1.3);return{x:(W-w)/2,y:(BASE_T+H)-(BASE_Y+HQ_H),w,h}}
+/* 기지 그림(위=사령부, 아래=앞마당) 두 조각으로: 사령부 부분은 HQR 높이에, 앞마당은 남은 높이에 맞춤 */
+function drawBaseImg(c,im){const ih=im.height,a=ih*15/672,b=ih*370/672,y0=(BASE_T+H)-(BASE_Y+HQ_H),k=HQ_H/(b-a),top=y0-a*k,bot=y0+HQ_H;
+  if(IMG.base0&&top>BASE_T)c.drawImage(IMG.base0,0,0,IMG.base0.width,IMG.base0.height*.2,0,BASE_T,W,top-BASE_T+1);c.drawImage(im,0,0,im.width,b,0,top,W,bot-top);c.drawImage(im,0,b,im.width,ih-b,0,bot,W,H-bot)}
 function hqPt(fx0,fy0){const r=HQR(),x=r.x+fx0*r.w,y=r.y+fy0*r.h;return{x,y:FLIP?(BASE_T+H)-y:y,dx:x,dy:y}}
 function denseAt(ex){let best=null,bs=-1;const L=G.enemies,step=Math.max(1,(L.length/40)|0);
   for(let k=0;k<L.length;k+=step){const e=L[k];if(e.dead||e.y<20||e.y>BASE_Y-10)continue;if(ex&&Math.hypot(e.x-ex.x,e.y-ex.y)<80)continue;let n=0;for(const o of L)if(!o.dead&&Math.abs(o.x-e.x)<50&&Math.abs(o.y-e.y)<50)n+=o.d.large?2:1;n+=e.y/200;if(n>bs){bs=n;best=e}}return best}
@@ -3688,7 +3692,7 @@ function drawShqFx(c,Q,r){const q=Q.id;
 }
 function drawBase(){
   const c=ctx,b=G.base,r=b.hp/b.maxHp;const _m=mirY((BASE_T+H)/2);
-  {const Q=shqById(G.shq),BH=H-BASE_T,si=Q&&IMG['shq'+Q.n];if(si&&IMG.base0){c.drawImage(IMG.base0,0,BASE_T,W,BH);const r=HQR();c.drawImage(si,r.x,r.y,r.w,r.h);drawShqFx(c,Q,r)}else{const im=IMG.base||BASEART.img;c.drawImage(im,0,BASE_T,W,BH)}}
+  {const Q=shqById(G.shq),BH=H-BASE_T,si=Q&&IMG['shq'+Q.n];if(si&&IMG.base0){drawBaseImg(c,IMG.base0);const r=HQR();c.drawImage(si,r.x,r.y,r.w,r.h);drawShqFx(c,Q,r)}else{const im=IMG.base||BASEART.img;if(IMG.base)drawBaseImg(c,im);else c.drawImage(im,0,BASE_T,W,BH)}}
   const hx=W/2,hy=BASE_Y+45;
   if(!BASEART.ai){
   c.save();c.translate(hx,hy);c.rotate(G.t*1.3);
@@ -4006,7 +4010,7 @@ function drawAtmos(rdt){
 }
 /* ================= 카메라 뷰 (게임 규칙은 같고 보는 방식만 바뀜) ================= */
 let FLIP=true;/* 적은 아래에서 올라오는 방향으로 고정 */
-const FPAD=84;const ZS=()=>FLIP?-1:1;
+const FPAD=38;const ZS=()=>FLIP?-1:1;
 function mirY(cy){if(!FLIP)return false;ctx.save();ctx.translate(0,2*cy);ctx.scale(1,-1);return true}
 function setFlip(v){FLIP=true;syncFlip()}
 function syncFlip(){for(const b of document.querySelectorAll('#segFlip button'))b.classList.toggle('on',(b.dataset.v==='1')===FLIP)}
@@ -4862,7 +4866,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=147,WEB_NAME='1.47.1';
+const WEB_BUILD=148,WEB_NAME='1.48.0';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
