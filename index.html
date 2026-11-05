@@ -3780,9 +3780,10 @@ function drawStruct0(s){
   }
   if(s.repT>0){s.repT-=1/60;c.strokeStyle=`rgba(159,255,230,${s.repT*1.4})`;c.lineWidth=2;if(isB){c.beginPath();c.ellipse(0,2,31,19,0,0,TAU);c.stroke()}else{rr(c,-30,-19,60,38,8);c.stroke()}}
   if(r<.3){const a=.5+.5*Math.sin(G.t*14);c.strokeStyle=`rgba(255,75,58,${a})`;c.lineWidth=1.5;if(isB){c.beginPath();c.ellipse(0,2,30,18,0,0,TAU);c.stroke()}else{rr(c,-29,-18,58,36,7);c.stroke()}}
-  if(r<.999){c.fillStyle='rgba(0,0,0,.65)';c.fillRect(-24,19.5,48,3);c.fillStyle=r>.5?'#9be38a':r>.25?AMBER:DANGER;c.fillRect(-24,19.5,48*r,3)}
   c.restore();
 }
+function drawStructHp(){const c=ctx;for(const s of G.structs){if(s.dead||s.building||s.kind==='tank')continue;const r=s.hp/s.maxHp;if(r>=.999)continue;const _m=mirY(s.y);
+  c.save();c.translate(s.x,s.y-(s.born<1?(1-s.born)*7:0));c.fillStyle='rgba(0,0,0,.85)';rr(c,-26,18.5,52,6,2);c.fill();c.fillStyle=r>.5?'#9be38a':r>.25?AMBER:DANGER;rr(c,-25,19.5,50*Math.max(.04,r),4,1.5);c.fill();c.restore();if(_m)ctx.restore()}}
 const ICO={};function icoImg(k){if(!ICO[k]){try{const im=new Image();im.src=UI_ICONS[k];ICO[k]=im}catch(e){return null}}return ICO[k]}
 const MUZ={rifle:[.94,.01],sniper:[.97,.015]};
 function troopFlip(t){return Math.cos(t.aim)<-.3}
@@ -4044,7 +4045,7 @@ function drawWorld(rdt){
     c.font='800 8px "Gothic A1", sans-serif';const tw=c.measureText(tx).width+10;c.fillStyle='rgba(12,12,13,.78)';rr(c,ax-tw/2,ly-6,tw,12,6);c.fill();c.fillStyle='#ffd34a';c.textAlign='center';c.textBaseline='middle';c.fillText(tx,ax,ly+.5);c.textAlign='left';c.textBaseline='alphabetic';if(_m)c.restore()}}
   if(G.rangeFlash>0){G.rangeFlash-=rdt;const a=Math.min(1,G.rangeFlash/1.2);c.strokeStyle=`rgba(159,210,232,${.55*a})`;c.lineWidth=1;c.setLineDash([4,4]);const seen=new Set();
     for(const t of G.troops){if(t.type!=='sniper'||t.dead)continue;const o=troopOrigin(t),key=Math.round(o.x/8)+','+Math.round(o.y/8);if(seen.has(key))continue;seen.add(key);c.beginPath();c.arc(o.x,o.y,troopRange('sniper',t.state==='in'),Math.PI*1.05,Math.PI*1.95);c.stroke()}c.setLineDash([])}
-  drawEnemies();drawShots();drawParts();drawDrones();drawStrikes();drawShells();drawJets();drawAtmos(rdt);
+  drawEnemies();drawShots();drawParts();drawDrones();drawStrikes();drawShells();drawStructHp();drawJets();drawAtmos(rdt);
 }
 function render(rdt=0){
   const c=ctx,k=scale*dpr;
@@ -4500,11 +4501,14 @@ function applyBoost(){if(!PRE_BOOST||!G)return;PRE_BOOST=false;const m=boostM(G.
   G.hfx=Object.assign({},G.hfx||{});G.hfx.rifleDmg=(G.hfx.rifleDmg||1)*BOOST_D;G.hfx.sniperDmg=(G.hfx.sniperDmg||1)*BOOST_D;G.boosted=true;later(1.2,()=>toast('출격 보급 도착 · 광물 +'+m,AMBER))}
 /* 1.38.1 교리 3장 중 1장이 특급(영웅 보라 75% / 전설 금 25%, 광고 보고 선택). 코어로 다시 뽑기 — 같은 화면에서 누를수록 비싸짐 */
 let DOC_RR=0;const docRRCost=()=>10*(DOC_RR+1);
-function drawDocs(){
-  const pool=DOCS.filter(d=>d.id!=='std'&&!d.prem&&docOk(d)),pick=[];
+function rollDocs(){const pool=DOCS.filter(d=>d.id!=='std'&&!d.prem&&docOk(d)),pick=[];
   while(pick.length<2&&pool.length)pick.push(pool.splice((Math.random()*pool.length)|0,1)[0]);
   while(pick.length<2)pick.push(DOCS[0]);
   const leg=Math.random()<.25,pp=PDOCS.filter(d=>d.tier===(leg?2:1));pick.splice((Math.random()*3)|0,0,pp[(Math.random()*pp.length)|0]);
+  META.docHand=pick.map(d=>d.id);saveMeta();return pick}
+function drawDocs(re){
+  let pick=null;if(!re&&Array.isArray(META.docHand)&&META.docHand.length===3){const h=META.docHand.map(id=>DOCS.find(d=>d.id===id));if(h.every(d=>d&&(d.prem||d.id==='std'||docOk(d))))pick=h}
+  if(!pick)pick=rollDocs();
   const L=$('docList');L.innerHTML='';
   for(const d of pick){const b=document.createElement('button');b.className='perk doc'+(d.prem?' prem t'+d.tier:'');
     b.innerHTML=(d.prem?`<span class="ptag">${d.tier===2?'전설':'영웅'}</span>`:'')+`<i class="pi" style="background-image:${kIco(d.ic)}"></i><span class="pn">${d.name}</span><span class="dg">${d.good.split(' · ').join('<br>')}</span>${d.bad?`<span class="db">${d.bad.split(' · ').join('<br>')}</span>`:''}`+(d.prem?`<span class="pad">${META.noads?'바로 선택':'<i class="tv"></i>광고'}</span>`:'');
@@ -4512,7 +4516,7 @@ function drawDocs(){
       if(d.prem){rewardAd('pdoc',()=>{$('ovDoc').hidden=true;META.doc=d.id;launchRun()});return}
       $('ovDoc').hidden=true;META.doc=d.id;launchRun()});L.appendChild(b)}
   const r=$('btnDocRR');if(r){const c=docRRCost();r.innerHTML=`<i class="rr">⟳</i>다시 뽑기 <span>${ai('core1')}${c}</span>`;r.classList.toggle('off',(META.cores|0)<c)}}
-function openDocPick(){DOC_RR=0;drawDocs();
+function openDocPick(){DOC_RR=META.docRR|0;drawDocs();
   $('ovTitle').hidden=true;$('ovDoc').hidden=false;{const n=$('lnav');if(n)n.classList.add('dim')}sfx.perk();docWait();
 }
 /* 전투 그림 준비(유닛 굽기 + WebGL 아틀라스)가 안 끝났으면 교리 카드 위에 진행률을 띄우고 끝날 때까지 기다림 */
@@ -4522,11 +4526,11 @@ function docWait(){const L=$('docList'),ey=document.querySelector('#ovDoc .eyebr
   if(prepDone()){if(bar)bar.remove();L.classList.remove('wait');if(ey)ey.textContent='출격 준비';return}
   if(!bar){bar=document.createElement('div');bar.id='docPrep';bar.innerHTML='<b>전투 준비 중</b><span><i></i></span><small>처음 한 번만 · 유닛 그림을 올리는 중</small>';L.before(bar)}
   L.classList.add('wait');const tick=()=>{if($('ovDoc').hidden)return;if(prepDone()){docWait();sfx.click();return}bar.querySelector('i').style.width=Math.round(prepP()*100)+'%';setTimeout(tick,150)};tick()}
-$('btnDocRR').addEventListener('click',()=>{auInit();const c=docRRCost();if((META.cores|0)<c){sfx.nope();gainFx('core1','코어가 부족해요');return}META.cores-=c;DOC_RR++;saveMeta();sfx.cash();drawDocs();refreshLobby()});
+$('btnDocRR').addEventListener('click',()=>{auInit();const c=docRRCost();if((META.cores|0)<c){sfx.nope();gainFx('core1','코어가 부족해요');return}META.cores-=c;DOC_RR++;META.docRR=DOC_RR;saveMeta();sfx.cash();drawDocs(true);refreshLobby()});
 $('btnBoost').addEventListener('click',()=>{auInit();if(PRE_BOOST){sfx.nope();return}rewardAd('boost',()=>{PRE_BOOST=true;syncBoost();sfx.cash()})});
 $('btnDocBack').addEventListener('click',()=>{auInit();$('ovDoc').hidden=true;$('ovTitle').hidden=false;{const n=$('lnav');if(n)n.classList.remove('dim')}sfx.click()});
 function launchRun(){{const n=$('lnav');if(n)n.classList.remove('dim')}tickEnergy();const ec=enCost();if(META.en<ec){sfx.nope();$('ovTitle').hidden=false;gainFx('bolt','에너지가 부족해요');openEnergy();return}
-  META.en-=ec;if(META.en<enMaxF()&&META.enT>Date.now()-1000)META.enT=Date.now();saveMeta();sfx.build();startGame()}
+  META.en-=ec;if(META.en<enMaxF()&&META.enT>Date.now()-1000)META.enT=Date.now();META.docHand=null;META.docRR=0;saveMeta();sfx.build();startGame()}
 $('stPrev').addEventListener('click',()=>{auInit();sfx.click();selStage=Math.max(0,selStage-1);META.stage=selStage;saveMeta();renderHome()});
 $('stNext').addEventListener('click',()=>{auInit();sfx.click();selStage=Math.min(STAGES.length-1,selStage+1);META.stage=selStage;saveMeta();renderHome()});
 document.querySelectorAll('#kMode button').forEach(b=>b.addEventListener('click',()=>{auInit();const m=+b.dataset.m;
@@ -4866,7 +4870,7 @@ function loop(now){
 
 /* 테스트용 훅 */
 /* ===== 자동 업데이트 (안드로이드 앱) ===== */
-const WEB_BUILD=148,WEB_NAME='1.48.0';
+const WEB_BUILD=149,WEB_NAME='1.48.1';
 (function(){
   let ver='v'+WEB_NAME;
   try{if(window.KXApp){ver='v'+WEB_NAME+' · 앱 '+KXApp.appVersion()}}catch(e){}
